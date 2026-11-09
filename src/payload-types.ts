@@ -67,8 +67,13 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    pages: Page;
+    services: Service;
+    vessels: Vessel;
+    'vessel-inquiries': VesselInquiry;
+    'quote-requests': QuoteRequest;
     media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,8 +81,13 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    vessels: VesselsSelect<false> | VesselsSelect<true>;
+    'vessel-inquiries': VesselInquiriesSelect<false> | VesselInquiriesSelect<true>;
+    'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -122,32 +132,77 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * The page with slug "home" is the homepage.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "pages".
  */
-export interface User {
+export interface Page {
   id: number;
-  name: string;
-  role: 'admin' | 'editor';
+  title: string;
+  layout?:
+    | (
+        | HeroBlock
+        | ServicesBlock
+        | AboutBlock
+        | StatsBlock
+        | RoutesBlock
+        | FeaturedVesselsBlock
+        | IndustriesBlock
+        | CTABlock
+        | GalleryBlock
+        | FAQBlock
+        | RichTextBlock
+      )[]
+    | null;
+  /**
+   * Leave empty to use the page title and text.
+   */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  /**
+   * Part of the URL: English letters, numbers and dashes. Example: sea-freight
+   */
+  slug: string;
+  /**
+   * Turn on only when the translation is complete.
+   */
+  showInEnglish?: boolean | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  eyebrow?: string | null;
+  title: string;
+  titleAccent?: string | null;
+  text?: string | null;
+  image?: (number | null) | Media;
+  primary?: {
+    label?: string | null;
+    /**
+     * e.g. /quote or /services
+     */
+    href?: string | null;
+  };
+  secondary?: {
+    label?: string | null;
+    /**
+     * e.g. /quote or /services
+     */
+    href?: string | null;
+  };
+  showTracking?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -196,6 +251,398 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesBlock".
+ */
+export interface ServicesBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  services?: (number | Service)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'services';
+}
+/**
+ * Services shown on the Services page and the homepage.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  summary?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  steps?:
+    | {
+        title: string;
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (number | null) | Media;
+  /**
+   * Leave empty to use the page title and text.
+   */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  /**
+   * Part of the URL: English letters, numbers and dashes. Example: sea-freight
+   */
+  slug: string;
+  icon?: ('ship' | 'container' | 'truck' | 'warehouse' | 'crane' | 'anchor' | 'box') | null;
+  /**
+   * Lower shows first
+   */
+  order?: number | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock".
+ */
+export interface AboutBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (number | null) | Media;
+  link?: {
+    label?: string | null;
+    /**
+     * e.g. /quote or /services
+     */
+    href?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'about';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  heading?: string | null;
+  items?:
+    | {
+        value: number;
+        suffix?: string | null;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoutesBlock".
+ */
+export interface RoutesBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  routes?:
+    | {
+        from: string;
+        to: string;
+        note?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'routes';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedVesselsBlock".
+ */
+export interface FeaturedVesselsBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredVessels';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock".
+ */
+export interface IndustriesBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  items?:
+    | {
+        title: string;
+        text?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'industries';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock".
+ */
+export interface CTABlock {
+  heading?: string | null;
+  text?: string | null;
+  link?: {
+    label?: string | null;
+    /**
+     * e.g. /quote or /services
+     */
+    href?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock".
+ */
+export interface GalleryBlock {
+  heading?: string | null;
+  images: (number | Media)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock".
+ */
+export interface FAQBlock {
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richText';
+}
+/**
+ * Each vessel appears on the Vessels for sale page with photos and specs.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vessels".
+ */
+export interface Vessel {
+  id: number;
+  name: string;
+  vesselType: 'bulk-carrier' | 'general-cargo' | 'container' | 'landing-craft' | 'tanker' | 'tug' | 'other';
+  yearBuilt?: number | null;
+  flag?: string | null;
+  location?: string | null;
+  summary?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  specs?: {
+    loa?: number | null;
+    beam?: number | null;
+    draft?: number | null;
+    dwt?: number | null;
+    grossTonnage?: number | null;
+    speed?: number | null;
+    engine?: string | null;
+    extra?:
+      | {
+          label: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  gallery?: (number | Media)[] | null;
+  specSheet?: (number | null) | Media;
+  price?: {
+    show?: boolean | null;
+    amount?: number | null;
+    currency?: ('USD' | 'AED' | 'IRT') | null;
+  };
+  /**
+   * Leave empty to use the page title and text.
+   */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  /**
+   * Part of the URL: English letters, numbers and dashes. Example: sea-freight
+   */
+  slug: string;
+  status: 'available' | 'reserved' | 'sold';
+  showWhenSold?: boolean | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vessel-inquiries".
+ */
+export interface VesselInquiry {
+  id: number;
+  vessel: number | Vessel;
+  name: string;
+  company?: string | null;
+  phone: string;
+  email?: string | null;
+  contactVia?: ('phone' | 'whatsapp' | 'email') | null;
+  message?: string | null;
+  status: 'new' | 'contacted' | 'negotiating' | 'closed';
+  internalNote?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests".
+ */
+export interface QuoteRequest {
+  id: number;
+  service: 'sea' | 'sea-road' | 'other';
+  serviceOther?: string | null;
+  origin: 'abadan' | 'khorramshahr' | 'other';
+  originOther?: string | null;
+  destination: 'umm-qasr' | 'basra' | 'kuwait' | 'dubai' | 'other';
+  destinationOther?: string | null;
+  cargo: 'container-20' | 'container-40' | 'bulk' | 'vehicle' | 'heavy-equipment' | 'general' | 'other';
+  cargoOther?: string | null;
+  weight?: number | null;
+  volume?: string | null;
+  timing?: ('asap' | 'this-week' | 'this-month' | 'next-month' | 'unknown' | 'other') | null;
+  timingOther?: string | null;
+  details?: string | null;
+  name: string;
+  company?: string | null;
+  phone: string;
+  email?: string | null;
+  contactVia?: ('phone' | 'whatsapp' | 'email') | null;
+  /**
+   * Generated automatically
+   */
+  trackingNumber?: string | null;
+  status: 'new' | 'in-review' | 'answered';
+  locale?: ('fa' | 'en') | null;
+  internalNote?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  name: string;
+  role: 'admin' | 'editor';
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -219,12 +666,32 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'vessels';
+        value: number | Vessel;
+      } | null)
+    | ({
+        relationTo: 'vessel-inquiries';
+        value: number | VesselInquiry;
+      } | null)
+    | ({
+        relationTo: 'quote-requests';
+        value: number | QuoteRequest;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -270,28 +737,341 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "pages_select".
  */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
     | T
     | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
+        hero?: T | HeroBlockSelect<T>;
+        services?: T | ServicesBlockSelect<T>;
+        about?: T | AboutBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
+        routes?: T | RoutesBlockSelect<T>;
+        featuredVessels?: T | FeaturedVesselsBlockSelect<T>;
+        industries?: T | IndustriesBlockSelect<T>;
+        cta?: T | CTABlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
       };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  slug?: T;
+  showInEnglish?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  titleAccent?: T;
+  text?: T;
+  image?: T;
+  primary?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  secondary?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  showTracking?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesBlock_select".
+ */
+export interface ServicesBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  services?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutBlock_select".
+ */
+export interface AboutBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  image?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        value?: T;
+        suffix?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoutesBlock_select".
+ */
+export interface RoutesBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  routes?:
+    | T
+    | {
+        from?: T;
+        to?: T;
+        note?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedVesselsBlock_select".
+ */
+export interface FeaturedVesselsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndustriesBlock_select".
+ */
+export interface IndustriesBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        image?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CTABlock_select".
+ */
+export interface CTABlockSelect<T extends boolean = true> {
+  heading?: T;
+  text?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  heading?: T;
+  images?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock_select".
+ */
+export interface FAQBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  body?: T;
+  steps?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  image?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  slug?: T;
+  icon?: T;
+  order?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vessels_select".
+ */
+export interface VesselsSelect<T extends boolean = true> {
+  name?: T;
+  vesselType?: T;
+  yearBuilt?: T;
+  flag?: T;
+  location?: T;
+  summary?: T;
+  description?: T;
+  specs?:
+    | T
+    | {
+        loa?: T;
+        beam?: T;
+        draft?: T;
+        dwt?: T;
+        grossTonnage?: T;
+        speed?: T;
+        engine?: T;
+        extra?:
+          | T
+          | {
+              label?: T;
+              value?: T;
+              id?: T;
+            };
+      };
+  gallery?: T;
+  specSheet?: T;
+  price?:
+    | T
+    | {
+        show?: T;
+        amount?: T;
+        currency?: T;
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  slug?: T;
+  status?: T;
+  showWhenSold?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vessel-inquiries_select".
+ */
+export interface VesselInquiriesSelect<T extends boolean = true> {
+  vessel?: T;
+  name?: T;
+  company?: T;
+  phone?: T;
+  email?: T;
+  contactVia?: T;
+  message?: T;
+  status?: T;
+  internalNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quote-requests_select".
+ */
+export interface QuoteRequestsSelect<T extends boolean = true> {
+  service?: T;
+  serviceOther?: T;
+  origin?: T;
+  originOther?: T;
+  destination?: T;
+  destinationOther?: T;
+  cargo?: T;
+  cargoOther?: T;
+  weight?: T;
+  volume?: T;
+  timing?: T;
+  timingOther?: T;
+  details?: T;
+  name?: T;
+  company?: T;
+  phone?: T;
+  email?: T;
+  contactVia?: T;
+  trackingNumber?: T;
+  status?: T;
+  locale?: T;
+  internalNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -347,6 +1127,31 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -391,6 +1196,31 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  logo?: (number | null) | Media;
+  logoDark?: (number | null) | Media;
+  /**
+   * Empty = default menu
+   */
+  headerNav?:
+    | {
+        label: string;
+        /**
+         * e.g. /about (without /fa)
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerNav?:
+    | {
+        label: string;
+        /**
+         * e.g. /about (without /fa)
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
   phone?: string | null;
   whatsapp?: string | null;
   email?: string | null;
@@ -398,7 +1228,7 @@ export interface SiteSetting {
   mapUrl?: string | null;
   socials?:
     | {
-        platform: 'instagram' | 'telegram' | 'linkedin' | 'whatsapp';
+        platform: 'instagram' | 'telegram' | 'linkedin' | 'whatsapp' | 'eitaa' | 'bale';
         url: string;
         id?: string | null;
       }[]
@@ -414,6 +1244,22 @@ export interface SiteSetting {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  logo?: T;
+  logoDark?: T;
+  headerNav?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  footerNav?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
   phone?: T;
   whatsapp?: T;
   email?: T;
