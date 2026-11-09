@@ -58,5 +58,17 @@
     "built": "Built",
     "allVessels": "All vessels for sale",
     "arrow": "→"
+  },
+  "services": {
+    "eyebrow": "Shahin Marine services",
+    "title": "Our services",
+    "intro": "From sea and road freight to warehousing and packing, we shape our service around your cargo.",
+    "empty": "No services yet.",
+    "steps": "How it works",
+    "quoteTitle": "Get a price for your cargo",
+    "quoteText": "Tell us the route and cargo type and our team will send you a price and transit time.",
+    "others": "Other services",
+    "ctaTitle": "Not sure which service fits your cargo?",
+    "ctaText": "Request a quote and our team will suggest the best route."
   }
 }
