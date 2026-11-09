@@ -97,3 +97,41 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* متن ویرایشگر پنل (درباره ما، توضیحات خدمات و کشتی‌ها) */
+.rich {
+  line-height: 2;
+}
+.rich > * + * {
+  margin-top: 1em;
+}
+.rich h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 1.6em;
+}
+.rich h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 1.4em;
+}
+.rich ul {
+  list-style: disc;
+  padding-inline-start: 1.4em;
+}
+.rich ol {
+  list-style: decimal;
+  padding-inline-start: 1.4em;
+}
+.rich a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.rich blockquote {
+  border-inline-start: 3px solid var(--primary);
+  padding-inline-start: 1em;
+  color: var(--muted);
+}

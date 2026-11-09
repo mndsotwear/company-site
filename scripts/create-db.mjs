@@ -23,7 +23,10 @@ const { rowCount } = await client.query('SELECT 1 FROM pg_database WHERE datname
 if (rowCount) {
   console.log(`Database "${dbName}" already exists.`)
 } else {
-  await client.query(`CREATE DATABASE "${dbName}"`)
+  // UTF8 الزامی است (پیش‌فرض ویندوز WIN1252 است و متن فارسی را ذخیره نمی‌کند)
+  await client.query(
+    `CREATE DATABASE "${dbName}" WITH ENCODING 'UTF8' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0`,
+  )
   console.log(`Database "${dbName}" created.`)
 }
 await client.end()

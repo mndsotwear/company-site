@@ -10,7 +10,8 @@
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
-    "db:create": "node scripts/create-db.mjs"
+    "db:create": "node scripts/create-db.mjs",
+    "seed:home": "payload run scripts/seed-home.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.93.0",
