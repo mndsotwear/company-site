@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { anyone, loggedIn } from '../access/roles'
+import { seoField } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { GROUPS } from '../lib/adminGroups'
 import { toPayloadOptions, VESSEL_STATUS_OPTIONS, VESSEL_TYPE_OPTIONS } from '../lib/options'
@@ -152,6 +153,7 @@ export const Vessels: CollectionConfig = {
         },
       ],
     },
+    seoField(),
     slugField(),
     {
       name: 'status',

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { anyone, loggedIn } from '../access/roles'
+import { seoField } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { GROUPS } from '../lib/adminGroups'
 
@@ -38,6 +39,7 @@ export const Services: CollectionConfig = {
       ],
     },
     { name: 'image', type: 'upload', relationTo: 'media', label: { fa: 'تصویر', en: 'Image' } },
+    seoField(),
     slugField(),
     {
       name: 'icon',
