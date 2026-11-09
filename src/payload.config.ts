@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Services } from './collections/Services'
 import { Vessels } from './collections/Vessels'
 import { VesselInquiries } from './collections/VesselInquiries'
+import { QuoteRequests } from './collections/QuoteRequests'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,7 +27,7 @@ export default buildConfig({
   },
 
   // بخش‌های پنل
-  collections: [Services, Vessels, VesselInquiries, Media, Users],
+  collections: [Services, Vessels, VesselInquiries, QuoteRequests, Media, Users],
   globals: [SiteSettings],
 
   // ویرایشگر متن
