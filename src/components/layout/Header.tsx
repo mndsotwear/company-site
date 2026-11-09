@@ -1,11 +1,13 @@
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import { getSiteSettings, mediaUrl, type Locale } from '@/lib/payload'
 import { ThemeToggle } from './ThemeToggle'
 import { LocaleSwitcher } from './LocaleSwitcher'
 import { MobileMenu } from './MobileMenu'
+import { Logo } from './Logo'
 
-// منوی اصلی (در فاز ۲ از تنظیمات پنل خوانده می‌شود)
-const NAV = [
+// منوی پیش‌فرض؛ اگر در پنل (تنظیمات سایت ← منو) لینکی تعریف شود، آن جایگزین می‌شود
+const DEFAULT_NAV = [
   { href: '/', key: 'home' },
   { href: '/about', key: 'about' },
   { href: '/services', key: 'services' },
@@ -15,17 +17,25 @@ const NAV = [
 ] as const
 
 export async function Header() {
+  const locale = (await getLocale()) as Locale
   const t = await getTranslations()
-  const items = NAV.map((n) => ({ href: n.href, label: t(`nav.${n.key}`) }))
+  const settings = await getSiteSettings(locale)
+
+  const items = settings.headerNav?.length
+    ? settings.headerNav.map((n) => ({ href: n.href, label: n.label }))
+    : DEFAULT_NAV.map((n) => ({ href: n.href, label: t(`nav.${n.key}`) }))
   const quote = { href: '/quote', label: t('nav.quote') }
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg">
       <div className="relative mx-auto flex h-18 max-w-7xl items-center justify-between gap-6 px-5">
-        <Link href="/" className="flex items-baseline gap-2 text-text">
-          {/* لوگوی واقعی در فاز ۰ جایگزین می‌شود */}
-          <span className="text-xl font-extrabold tracking-tight">{t('meta.siteName')}</span>
-          <span className="hidden text-xs text-muted sm:inline">{t('meta.tagline')}</span>
+        <Link href="/" aria-label={t('meta.siteName')}>
+          <Logo
+            light={mediaUrl(settings.logo)}
+            dark={mediaUrl(settings.logoDark)}
+            name={t('meta.siteName')}
+            tagline={t('meta.tagline')}
+          />
         </Link>
 
         <nav className="hidden lg:block" aria-label={t('nav.menu')}>

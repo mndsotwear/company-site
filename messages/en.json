@@ -41,7 +41,15 @@
     "address": "Amiri, Abadan",
     "rights": "All rights reserved for Shahin Marine.",
     "credit": "Website by Pouyan Hub",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "whatsapp": "Chat on WhatsApp"
   },
-  "ports": ["Abadan", "Khorramshahr", "Umm Qasr", "Basra", "Kuwait", "Dubai"]
+  "ports": [
+    "Abadan",
+    "Khorramshahr",
+    "Umm Qasr",
+    "Basra",
+    "Kuwait",
+    "Dubai"
+  ]
 }

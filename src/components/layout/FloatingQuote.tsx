@@ -1,15 +1,17 @@
-import { getTranslations } from 'next-intl/server'
-import { Link } from '@/i18n/navigation'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { getSiteSettings, whatsappLink, type Locale } from '@/lib/payload'
+import { FloatingActions } from './FloatingActions'
 
-// دکمه‌ی شناور نارنجی «استعلام قیمت» (مثل سایت فعلی)
+// دکمه‌ی شناور «استعلام قیمت» (مثل سایت فعلی) + دکمه‌ی واتساپ
 export async function FloatingQuote() {
-  const t = await getTranslations('nav')
+  const locale = (await getLocale()) as Locale
+  const t = await getTranslations()
+  const s = await getSiteSettings(locale)
   return (
-    <Link
-      href="/quote"
-      className="fixed bottom-5 end-5 z-30 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110"
-    >
-      {t('quote')}
-    </Link>
+    <FloatingActions
+      quoteLabel={t('nav.quote')}
+      whatsappHref={whatsappLink(s.whatsapp || s.phone)}
+      whatsappLabel={t('footer.whatsapp')}
+    />
   )
 }
