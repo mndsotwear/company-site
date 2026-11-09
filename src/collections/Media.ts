@@ -1,9 +1,11 @@
 import type { CollectionConfig } from 'payload'
 import { anyone, loggedIn } from '../access/roles'
+import { GROUPS } from '../lib/adminGroups'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: { fa: 'رسانه', en: 'Media' }, plural: { fa: 'رسانه‌ها', en: 'Media' } },
+  admin: { group: GROUPS.content },
   access: { read: anyone, create: loggedIn, update: loggedIn, delete: loggedIn },
   upload: {
     // عکس‌ها خودکار در چند اندازه و با فرمت WebP ذخیره می‌شوند

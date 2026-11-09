@@ -1,10 +1,11 @@
 import type { CollectionConfig } from 'payload'
 import { adminOnly, adminOnlyField, isAdmin } from '../access/roles'
+import { GROUPS } from '../lib/adminGroups'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: { fa: 'کاربر', en: 'User' }, plural: { fa: 'کاربران', en: 'Users' } },
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'email', 'role'] },
+  admin: { group: GROUPS.system, useAsTitle: 'name', defaultColumns: ['name', 'email', 'role'] },
   auth: true,
   access: {
     // اولین کاربر بدون ورود ساخته می‌شود؛ بعد از آن فقط مدیر کاربر می‌سازد

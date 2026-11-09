@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Services } from './collections/Services'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -22,8 +23,8 @@ export default buildConfig({
     meta: { titleSuffix: ' | شاهین مارین' },
   },
 
-  // بخش‌های پنل (در فاز ۲ کامل می‌شوند)
-  collections: [Users, Media],
+  // بخش‌های پنل
+  collections: [Services, Media, Users],
   globals: [SiteSettings],
 
   // ویرایشگر متن
