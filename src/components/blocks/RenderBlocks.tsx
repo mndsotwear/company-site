@@ -45,8 +45,11 @@ export function RenderBlocks({ blocks }: { blocks: Page['layout'] }) {
           case 'richText':
             return (
               <section key={key} className="py-16">
-                <Container className="max-w-3xl">
-                  <RichText data={block.content} />
+                <Container>
+                  {/* عرض محدود برای خوانایی متن‌های طولانی */}
+                  <div className="max-w-3xl">
+                    <RichText data={block.content} className="text-lg" />
+                  </div>
                 </Container>
               </section>
             )

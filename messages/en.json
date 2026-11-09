@@ -125,5 +125,13 @@
     "soldNote": "This vessel has been sold. Contact us for similar vessels.",
     "specSheet": "Download full specs",
     "waMessage": "Hello, I would like information about this vessel:"
+  },
+  "notFound": {
+    "code": "Error 404",
+    "title": "This ship has drifted off course.",
+    "text": "We could not find the page you are looking for. The address may be wrong or the page may have moved.",
+    "home": "Back to home",
+    "coords": "Position: unknown",
+    "from": "Abadan"
   }
 }
