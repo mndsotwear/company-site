@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { Link } from '@/i18n/navigation'
+import { Button } from '@/components/ui/Button'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -38,18 +38,12 @@ export default async function HomePage({ params }: Props) {
             <p className="mt-6 max-w-xl text-base leading-8 text-foam/80 sm:text-lg">{t('lead')}</p>
 
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                href="/quote"
-                className="rounded-full bg-sky px-7 py-3.5 font-semibold text-navy transition hover:brightness-110"
-              >
+              <Button href="/quote" size="lg" variant="sky">
                 {t('ctaQuote')}
-              </Link>
-              <Link
-                href="/services"
-                className="rounded-full border border-foam/40 px-7 py-3.5 font-semibold text-foam transition hover:border-sky hover:text-sky"
-              >
+              </Button>
+              <Button href="/services" size="lg" variant="outlineLight">
                 {t('ctaServices')}
-              </Link>
+              </Button>
             </div>
 
             <p className="mt-14 text-xs tracking-wide text-foam/50">{t('coords')}</p>
