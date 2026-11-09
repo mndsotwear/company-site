@@ -70,5 +70,20 @@
     "others": "Other services",
     "ctaTitle": "Not sure which service fits your cargo?",
     "ctaText": "Request a quote and our team will suggest the best route."
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "title": "Contact us",
+    "intro": "Reach us through any of the channels below for advice, a quote or shipment tracking.",
+    "phone": "Phone",
+    "phoneHint": "Talk to our team directly",
+    "whatsapp": "WhatsApp",
+    "whatsappHint": "Send messages and documents",
+    "email": "Email",
+    "emailHint": "For formal correspondence",
+    "office": "Head office",
+    "map": "View on map",
+    "quoteTitle": "Need a freight price?",
+    "quoteText": "Fill in the quote form and our team will contact you."
   }
 }

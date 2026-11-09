@@ -1,5 +1,5 @@
 /**
- * ساخت صفحه‌ی اصلی (home) و دو خدمت اولیه با متن‌های سایت فعلی shahinmarine.com
+ * ساخت صفحه‌ی اصلی (home)، صفحه‌ی درباره ما (about) و دو خدمت اولیه با متن‌های سایت فعلی shahinmarine.com
  * اجرا: npm run seed:home
  * اگر صفحه یا خدمت از قبل وجود داشته باشد، دست نمی‌خورد.
  * آمار و کارت‌های صنایع عمداً ساخته نمی‌شوند (عدد و متن واقعی را کارفرما می‌دهد).
@@ -118,6 +118,49 @@ if (home.totalDocs) {
     },
   })
   console.log('page "home" created')
+}
+
+// ---- درباره ما ----
+const about = await payload.count({ collection: 'pages', where: { slug: { equals: 'about' } } })
+if (about.totalDocs) {
+  console.log('page "about" exists, skipped')
+} else {
+  await payload.create({
+    collection: 'pages',
+    locale: 'fa',
+    data: {
+      title: 'درباره ما',
+      slug: 'about',
+      showInEnglish: false,
+      layout: [
+        {
+          blockType: 'about',
+          eyebrow: 'شاهین مارین',
+          heading: 'حمل‌ونقل مطمئن محموله شما از مبدأ تا مقصد',
+          body: para(
+            'شاهین مارین خدمات حمل‌ونقل دریایی و جاده‌ای را برای افراد و شرکت‌ها ارائه می‌کند. برای دریافت مشاوره و استعلام قیمت، با ما تماس بگیرید یا درخواست خود را ثبت کنید.',
+          ),
+        },
+        {
+          blockType: 'routes',
+          eyebrow: 'مسیرها',
+          heading: 'از بنادر آبادان و خرمشهر',
+          routes: [
+            { from: 'آبادان', to: 'ام‌القصر (عراق)' },
+            { from: 'آبادان', to: 'بصره (عراق)' },
+            { from: 'آبادان', to: 'کویت' },
+            { from: 'آبادان', to: 'دبی (امارات)' },
+          ],
+        },
+        {
+          blockType: 'cta',
+          heading: 'برای همکاری با ما تماس بگیرید.',
+          link: { label: 'تماس با ما', href: '/contact' },
+        },
+      ],
+    },
+  })
+  console.log('page "about" created')
 }
 
 process.exit(0)

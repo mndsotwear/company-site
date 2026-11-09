@@ -2,37 +2,19 @@ import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { Hero } from '@/components/sections/Hero'
-import { getPayloadClient, mediaUrl, type Locale } from '@/lib/payload'
+import { getPageBySlug, pageMetadata } from '@/lib/pages'
+import type { Locale } from '@/lib/payload'
 
 type Props = { params: Promise<{ locale: string }> }
 
-/** صفحه‌ای با آدرس home در پنل */
-async function getHomePage(locale: Locale) {
-  const payload = await getPayloadClient()
-  const { docs } = await payload.find({
-    collection: 'pages',
-    locale,
-    where: { slug: { equals: 'home' } },
-    limit: 1,
-    depth: 2,
-  })
-  const page = docs[0]
-  if (!page) return null
-  if (locale === 'en' && !page.showInEnglish) return null
-  return page
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const page = await getHomePage(locale as Locale)
-  if (!page?.seo) return {}
-  const image = mediaUrl(page.seo.image)
-  return {
-    ...(page.seo.title ? { title: { absolute: page.seo.title } } : {}),
-    ...(page.seo.description ? { description: page.seo.description } : {}),
-    ...(image ? { openGraph: { images: [image] } } : {}),
-    ...(page.seo.noIndex ? { robots: { index: false } } : {}),
-  }
+  const page = await getPageBySlug('home', locale as Locale)
+  if (!page) return {}
+  const meta = pageMetadata(page, '')
+  // عنوان پیش‌فرض صفحه اصلی «شاهین مارین – حمل و نقل دریایی» می‌ماند مگر در سئو عوض شود
+  if (!page.seo?.title) delete meta.title
+  return meta
 }
 
 // صفحه اصلی: اگر صفحه‌ی home در پنل ساخته شده باشد، از بلوک‌های آن ساخته می‌شود؛
@@ -40,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const page = await getHomePage(locale as Locale)
+  const page = await getPageBySlug('home', locale as Locale)
 
   if (page?.layout?.length) return <RenderBlocks blocks={page.layout} />
 
