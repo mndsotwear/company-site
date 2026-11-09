@@ -133,5 +133,62 @@
     "home": "Back to home",
     "coords": "Position: unknown",
     "from": "Abadan"
+  },
+  "quote": {
+    "eyebrow": "Request a quote",
+    "title": "Get a price for your cargo",
+    "intro": "Enter the route and cargo type and our team will send you a price and transit time.",
+    "stepsLabel": "Form steps",
+    "steps": {
+      "route": "Route & cargo",
+      "details": "Details",
+      "contact": "Contact"
+    },
+    "service": "Service",
+    "origin": "Origin",
+    "destination": "Destination",
+    "cargo": "Cargo type",
+    "weight": "Approx. weight (t)",
+    "weightPlaceholder": "e.g. 25",
+    "volume": "Volume or count",
+    "volumePlaceholder": "e.g. 2 containers or 40 m³",
+    "timing": "Shipping time",
+    "details": "Details",
+    "detailsPlaceholder": "Anything about the cargo, packing or special conditions",
+    "name": "Full name",
+    "company": "Company",
+    "phone": "Phone",
+    "phoneHint": "Iranian mobile, or international with country code (e.g. +964…)",
+    "email": "Email",
+    "contactVia": "How should we contact you?",
+    "choose": "Choose",
+    "chooseOptional": "Choose (optional)",
+    "otherPlaceholder": "Please specify",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "errors": {
+      "field": "Please fill this in correctly.",
+      "phone": "Phone number is not valid.",
+      "email": "Email is not valid.",
+      "invalid": "Some fields are not filled in correctly. Please check.",
+      "rate": "Too many requests. Please try again in a few minutes.",
+      "server": "Something went wrong. Please try again or call us."
+    },
+    "success": {
+      "eyebrow": "Request received",
+      "title": "Thank you! We received your request.",
+      "text": "Our team will review it and contact you the way you chose.",
+      "number": "Request tracking number",
+      "home": "Back to home",
+      "services": "View services"
+    },
+    "afterTitle": "After you send",
+    "after1": "You get a tracking number for your request.",
+    "after2": "Our team reviews the route and cargo.",
+    "after3": "We send you the price and transit time the way you chose.",
+    "directTitle": "Call directly",
+    "directText": "In a hurry? Call us directly."
   }
 }

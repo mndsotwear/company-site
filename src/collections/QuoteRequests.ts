@@ -2,6 +2,8 @@ import type { CollectionConfig, Field } from 'payload'
 import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
 import { jalaliYear } from '../lib/jalali'
+import { emailTable, sendMail, sendSms } from '../lib/notify'
+import { isIranMobile } from '../lib/validate'
 import {
   CARGO_OPTIONS,
   CONTACT_VIA_OPTIONS,
@@ -10,6 +12,7 @@ import {
   SERVICE_OPTIONS,
   TIMING_OPTIONS,
   toPayloadOptions,
+  labelOf,
   type Option,
 } from '../lib/options'
 
@@ -59,6 +62,55 @@ export const QuoteRequests: CollectionConfig = {
         const lastNumber = Number(last.docs[0]?.trackingNumber?.split('-')[2] ?? 0)
         data.trackingNumber = `${prefix}${String(lastNumber + 1).padStart(4, '0')}`
         return data
+      },
+    ],
+    afterChange: [
+      // اطلاع‌رسانی بعد از ثبت: پیامک و ایمیل به شرکت + پیامک تأیید به مشتری
+      async ({ doc, operation, req }) => {
+        if (operation !== 'create') return doc
+        const settings = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
+        const pick = (v: string | null | undefined, other: string | null | undefined, opts: Option[]) =>
+          v === 'other' ? other || 'سایر' : labelOf(opts, v)
+        const origin = pick(doc.origin, doc.originOther, ORIGIN_OPTIONS)
+        const destination = pick(doc.destination, doc.destinationOther, DESTINATION_OPTIONS)
+        const cargo = pick(doc.cargo, doc.cargoOther, CARGO_OPTIONS)
+
+        // اجرای ناهمزمان تا پاسخ فرم برای مشتری منتظر پیامک و ایمیل نماند
+        void Promise.all([
+          sendSms(
+            req.payload,
+            settings.notifyPhone,
+            `استعلام جدید ${doc.trackingNumber}\n${origin} ← ${destination}، ${cargo}\n${doc.name} ${doc.phone}`,
+          ),
+          isIranMobile(doc.phone)
+            ? sendSms(
+                req.payload,
+                doc.phone,
+                `شاهین مارین: درخواست شما با شماره ${doc.trackingNumber} ثبت شد. کارشناسان ما به‌زودی با شما تماس می‌گیرند.`,
+              )
+            : Promise.resolve(),
+          sendMail(
+            req.payload,
+            settings.notifyEmail,
+            `استعلام قیمت جدید ${doc.trackingNumber}`,
+            emailTable(`استعلام قیمت ${doc.trackingNumber}`, [
+              ['نوع خدمت', pick(doc.service, doc.serviceOther, SERVICE_OPTIONS)],
+              ['مبدأ', origin],
+              ['مقصد', destination],
+              ['نوع بار', cargo],
+              ['وزن (تن)', doc.weight],
+              ['حجم یا تعداد', doc.volume],
+              ['زمان ارسال', doc.timing ? pick(doc.timing, doc.timingOther, TIMING_OPTIONS) : null],
+              ['توضیحات', doc.details],
+              ['نام', doc.name],
+              ['شرکت', doc.company],
+              ['تلفن', doc.phone],
+              ['ایمیل', doc.email],
+              ['روش تماس', labelOf(CONTACT_VIA_OPTIONS, doc.contactVia)],
+            ]),
+          ),
+        ])
+        return doc
       },
     ],
   },
