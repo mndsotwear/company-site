@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
 import { Services } from './collections/Services'
 import { Vessels } from './collections/Vessels'
 import { VesselInquiries } from './collections/VesselInquiries'
@@ -27,7 +28,7 @@ export default buildConfig({
   },
 
   // بخش‌های پنل
-  collections: [Services, Vessels, VesselInquiries, QuoteRequests, Media, Users],
+  collections: [Pages, Services, Vessels, VesselInquiries, QuoteRequests, Media, Users],
   globals: [SiteSettings],
 
   // ویرایشگر متن
