@@ -1,0 +1,50 @@
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import { notFound } from 'next/navigation'
+import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+
+import { routing, isRtl } from '@/i18n/routing'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { FloatingQuote } from '@/components/layout/FloatingQuote'
+import '@/styles/globals.css'
+
+type Props = { children: ReactNode; params: Promise<{ locale: string }> }
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'meta' })
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+    title: { default: `${t('siteName')} – ${t('tagline')}`, template: `%s | ${t('siteName')}` },
+    description: t('description'),
+    alternates: { languages: { fa: '/fa', en: '/en' } },
+  }
+}
+
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params
+  if (!hasLocale(routing.locales, locale)) notFound()
+  setRequestLocale(locale)
+
+  return (
+    <html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
+      <body className="min-h-screen font-sans antialiased">
+        <NextIntlClientProvider>
+          <ThemeProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <FloatingQuote />
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  )
+}

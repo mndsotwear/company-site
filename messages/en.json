@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "siteName": "Shahin Marine",
+    "tagline": "Sea Freight",
+    "description": "Shahin Marine: sea and road freight from the ports of Abadan and Khorramshahr to Iraq, Kuwait and the UAE."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "Services",
+    "fleet": "Vessels for sale",
+    "tracking": "Track a shipment",
+    "contact": "Contact us",
+    "quote": "Request a quote",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "theme": {
+    "toLight": "Light theme",
+    "toDark": "Dark theme"
+  },
+  "locale": {
+    "switch": "فارسی",
+    "switchLabel": "Switch to Persian"
+  },
+  "home": {
+    "eyebrow": "International freight",
+    "titleA": "Your bridge to",
+    "titleB": "global trade",
+    "lead": "Backed by experience, expertise and an international freight network, we manage your cargo's journey with confidence.",
+    "ctaQuote": "Get a consultation",
+    "ctaServices": "View services",
+    "trackTitle": "Quick shipment tracking",
+    "trackHint": "Last 6 digits of the chassis number",
+    "trackButton": "Track",
+    "coords": "Abadan · 30°20′N · 48°17′E"
+  },
+  "footer": {
+    "contactTitle": "Contact",
+    "linksTitle": "Useful links",
+    "address": "Amiri, Abadan",
+    "rights": "All rights reserved for Shahin Marine.",
+    "credit": "Website by Pouyan Hub",
+    "privacy": "Privacy"
+  },
+  "ports": ["Abadan", "Khorramshahr", "Umm Qasr", "Basra", "Kuwait", "Dubai"]
+}

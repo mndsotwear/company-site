@@ -1,0 +1,99 @@
+@import 'tailwindcss';
+/* فونت موقت: وزیرمتن (رایگان). اگر فایل‌های ایران‌یکان و پیدا برسد، این خط عوض می‌شود */
+@import 'vazirmatn/Vazirmatn-Variable-font-face.css';
+
+/* حالت تیره با کلاس .dark روی <html> فعال می‌شود (توسط next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ========== رنگ‌های تم روشن ========== */
+:root {
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --text: #071b30;
+  --muted: #4a5b6e;
+  --primary: #0787c2;
+  --accent: #f57c00;
+  --border: #d5e2ec;
+  color-scheme: light;
+}
+
+/* ========== رنگ‌های تم تیره ========== */
+.dark {
+  --bg: #071b30;
+  --surface: #0c2742;
+  --text: #eaf6ff;
+  --muted: #9fb4c8;
+  --primary: #079fe5;
+  --accent: #f39200;
+  --border: #143852;
+  color-scheme: dark;
+}
+
+/* اتصال رنگ‌ها به کلاس‌های Tailwind: bg-bg, text-primary, border-border, ... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+
+  /* رنگ‌های ثابت هویت (در هر دو تم یکسان) */
+  --color-navy: #071b30;
+  --color-navy-deep: #003265;
+  --color-ink: #1d1d1d;
+  --color-sky: #079fe5;
+  --color-foam: #eaf6ff;
+
+  --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ارقام لاتین در متن انگلیسی داخل صفحه فارسی درست نمایش داده شوند */
+.ltr-nums {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* خطوط کم‌رنگ نقشه‌ی دریایی (عرض و طول جغرافیایی) */
+.chart-grid {
+  background-image:
+    linear-gradient(to right, rgb(234 246 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(234 246 255 / 0.06) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+/* نوار متحرک بنادر */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker 40s linear infinite;
+}
+[dir='rtl'] .ticker-track {
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
