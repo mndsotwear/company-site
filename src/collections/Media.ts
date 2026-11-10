@@ -12,10 +12,11 @@ export const Media: CollectionConfig = {
     staticDir: 'media',
     mimeTypes: ['image/*', 'application/pdf'],
     formatOptions: { format: 'webp', options: { quality: 82 } },
+    // هر اندازه هم جداگانه WebP می‌شود؛ بدون این، Payload اندازه‌ها را با فرمت فایل اصلی (مثلاً PNG) می‌سازد
     imageSizes: [
-      { name: 'thumb', width: 400 },
-      { name: 'card', width: 800 },
-      { name: 'hero', width: 1920 },
+      { name: 'thumb', width: 400, formatOptions: { format: 'webp', options: { quality: 80 } } },
+      { name: 'card', width: 800, formatOptions: { format: 'webp', options: { quality: 80 } } },
+      { name: 'hero', width: 1920, formatOptions: { format: 'webp', options: { quality: 82 } } },
     ],
   },
   fields: [
