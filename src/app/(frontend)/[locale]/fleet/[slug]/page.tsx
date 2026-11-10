@@ -8,6 +8,7 @@ import { CmsImage } from '@/components/ui/CmsImage'
 import { Container } from '@/components/ui/Container'
 import { RichText } from '@/components/ui/RichText'
 import { StatusBadge } from '@/components/vessels/StatusBadge'
+import { InquiryForm } from '@/components/forms/InquiryForm'
 import { formatNumber } from '@/lib/format'
 import { labelOf, VESSEL_TYPE_OPTIONS } from '@/lib/options'
 import { getSiteSettings, mediaUrl, whatsappLink, type Locale } from '@/lib/payload'
@@ -119,6 +120,14 @@ export default async function VesselPage({ params }: Props) {
               <RichText data={v.description} className="text-muted" />
             </section>
           )}
+
+          {v.status !== 'sold' && (
+            <section id="inquiry" className="mt-14 scroll-mt-24">
+              <h2 className="text-2xl font-extrabold">{t('inquiry.title')}</h2>
+              <p className="mb-6 mt-2 text-muted">{t('inquiry.intro')}</p>
+              <InquiryForm vesselId={v.id} vesselName={v.name} />
+            </section>
+          )}
         </div>
 
         {/* ستون کناری: قیمت و درخواست */}
@@ -131,9 +140,14 @@ export default async function VesselPage({ params }: Props) {
 
               {v.status !== 'sold' ? (
                 <div className="mt-7 space-y-3">
-                  {/* فرم کامل درخواست خرید در فاز ۴ اضافه می‌شود */}
+                  <a
+                    href="#inquiry"
+                    className="flex w-full items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
+                  >
+                    {t('inquiry.cta')}
+                  </a>
                   {wa && (
-                    <Button href={`${wa}?text=${waText}`} variant="accent" className="w-full">
+                    <Button href={`${wa}?text=${waText}`} variant="outlineLight" className="w-full">
                       {t('fleet.inquireWhatsapp')}
                     </Button>
                   )}

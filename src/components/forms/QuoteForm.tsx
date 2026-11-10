@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useRef, useState } from 'react'
+import { startTransition, useActionState, useEffect, useRef, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { submitQuote, type QuoteState } from '@/app/(frontend)/[locale]/quote/actions'
 import { Link } from '@/i18n/navigation'
@@ -93,10 +93,13 @@ export function QuoteForm({ defaultService = '' }: { defaultService?: string }) 
   return (
     <form
       ref={formRef}
-      action={action}
       noValidate
+      // ارسال دستی تا React بعد از پاسخ سرور فیلدها را پاک نکند (اگر خطا بود، نوشته‌های کاربر بماند)
       onSubmit={(e) => {
-        if (!validateStep()) e.preventDefault()
+        e.preventDefault()
+        if (!validateStep()) return
+        const fd = new FormData(e.currentTarget)
+        startTransition(() => action(fd))
       }}
       className="relative rounded-2xl border border-border bg-surface p-6 sm:p-10"
     >

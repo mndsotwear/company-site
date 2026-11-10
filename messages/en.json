@@ -190,5 +190,33 @@
     "after3": "We send you the price and transit time the way you chose.",
     "directTitle": "Call directly",
     "directText": "In a hurry? Call us directly."
+  },
+  "inquiry": {
+    "title": "Inquire about this vessel",
+    "intro": "Fill in the form and our team will contact you about price, inspection and terms of sale.",
+    "cta": "Send a purchase inquiry",
+    "name": "Full name",
+    "company": "Company",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "messagePlaceholder": "e.g. questions about price, inspection or documents",
+    "contactVia": "How should we contact you?",
+    "submit": "Send inquiry",
+    "sending": "Sending…",
+    "errors": {
+      "field": "Please fill this in correctly.",
+      "phone": "Phone number is not valid.",
+      "email": "Email is not valid.",
+      "invalid": "Some fields are not filled in correctly. Please check.",
+      "rate": "Too many requests. Please try again in a few minutes.",
+      "server": "Something went wrong. Please try again or call us.",
+      "sold": "This vessel has been sold."
+    },
+    "success": {
+      "eyebrow": "Inquiry received",
+      "title": "Thank you! We received your inquiry.",
+      "text": "Your inquiry about {vessel} has been received. Our team will contact you soon."
+    }
   }
 }

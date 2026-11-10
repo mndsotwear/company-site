@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
-import { CONTACT_VIA_OPTIONS, toPayloadOptions } from '../lib/options'
+import { CONTACT_VIA_OPTIONS, labelOf, toPayloadOptions } from '../lib/options'
+import { emailTable, sendMail, sendSms } from '../lib/notify'
+import { isIranMobile } from '../lib/validate'
 
 // درخواست‌های خرید کشتی که مشتری از صفحه‌ی هر کشتی می‌فرستد.
 // ثبت از سایت در فاز ۴ از طریق سرور انجام می‌شود (نه مستقیم از API عمومی).
@@ -18,6 +20,45 @@ export const VesselInquiries: CollectionConfig = {
   },
   defaultSort: '-createdAt',
   access: { read: loggedIn, create: loggedIn, update: loggedIn, delete: adminOnly },
+  hooks: {
+    afterChange: [
+      // اطلاع‌رسانی بعد از ثبت: پیامک و ایمیل به شرکت + پیامک تأیید به مشتری
+      async ({ doc, operation, req }) => {
+        if (operation !== 'create') return doc
+        const settings = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
+        const vesselId = typeof doc.vessel === 'object' ? doc.vessel.id : doc.vessel
+        const vessel = await req.payload.findByID({ collection: 'vessels', id: vesselId, depth: 0, req }).catch(() => null)
+        const vesselName = vessel?.name ?? `#${vesselId}`
+
+        // اجرای ناهمزمان تا پاسخ فرم منتظر پیامک و ایمیل نماند
+        void Promise.all([
+          sendSms(req.payload, settings.notifyPhone, `درخواست خرید کشتی: ${vesselName}\n${doc.name} ${doc.phone}`),
+          isIranMobile(doc.phone)
+            ? sendSms(
+                req.payload,
+                doc.phone,
+                `شاهین مارین: درخواست شما برای کشتی ${vesselName} ثبت شد. کارشناسان ما به‌زودی با شما تماس می‌گیرند.`,
+              )
+            : Promise.resolve(),
+          sendMail(
+            req.payload,
+            settings.notifyEmail,
+            `درخواست خرید کشتی: ${vesselName}`,
+            emailTable(`درخواست خرید کشتی ${vesselName}`, [
+              ['کشتی', vesselName],
+              ['نام', doc.name],
+              ['شرکت', doc.company],
+              ['تلفن', doc.phone],
+              ['ایمیل', doc.email],
+              ['روش تماس', labelOf(CONTACT_VIA_OPTIONS, doc.contactVia)],
+              ['پیام', doc.message],
+            ]),
+          ),
+        ])
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'vessel',
