@@ -12,6 +12,9 @@ import { FloatingQuote } from '@/components/layout/FloatingQuote'
 import { SmoothScroll } from '@/components/motion/SmoothScroll'
 import '@/styles/globals.css'
 
+// همه‌ی صفحه‌ها هنگام درخواست از دیتابیس ساخته می‌شوند (تغییرات پنل فوراً دیده می‌شود و ساخت Docker به دیتابیس نیاز ندارد)
+export const dynamic = 'force-dynamic'
+
 type Props = { children: ReactNode; params: Promise<{ locale: string }> }
 
 export function generateStaticParams() {

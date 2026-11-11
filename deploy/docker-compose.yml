@@ -1,0 +1,36 @@
+# اجرای سایت روی سرور: دیتابیس PostgreSQL + سایت
+# در پوشه‌ی deploy روی سرور: docker compose up -d
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: shahin_marine
+      POSTGRES_USER: shahin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD را در فایل .env بنویسید}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U shahin -d shahin_marine']
+      interval: 10s
+      retries: 5
+
+  app:
+    image: shahin-marine:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URI: postgres://shahin:${DB_PASSWORD}@db:5432/shahin_marine
+    volumes:
+      - ./media:/app/media
+      - ./imports:/app/imports
+    # فقط از روی خود سرور (Nginx) در دسترس است، نه مستقیم از اینترنت
+    ports:
+      - '127.0.0.1:3000:3000'
+
+volumes:
+  db-data:

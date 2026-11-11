@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getPayloadClient } from '@/lib/payload'
 
 // نقشه‌ی سایت برای گوگل: صفحه‌های ثابت + صفحه‌های پنل + خدمات + کشتی‌ها، در هر دو زبان
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shahinmarine.com').replace(/\/$/, '')
 

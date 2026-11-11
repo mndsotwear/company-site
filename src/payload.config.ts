@@ -7,6 +7,7 @@ import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { fa } from '@payloadcms/translations/languages/fa'
 import { en } from '@payloadcms/translations/languages/en'
 import sharp from 'sharp'
+import { migrations } from './migrations/index'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -76,6 +77,8 @@ export default buildConfig({
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || '' },
+    // روی سرور (production) جدول‌ها با migration ساخته/به‌روز می‌شوند؛ روی کامپیوتر خودکار (push)
+    prodMigrations: migrations,
   }),
   sharp,
 })

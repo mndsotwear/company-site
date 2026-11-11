@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+logs
+media
+imports
+.env
+*.log
+tsconfig.tsbuildinfo

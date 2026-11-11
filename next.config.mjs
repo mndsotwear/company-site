@@ -1,5 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 // متن‌های ثابت دو زبان از این فایل خوانده می‌شوند
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
@@ -19,6 +21,10 @@ const WP_REDIRECTS = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // خروجی مستقل برای Docker: فقط فایل‌های لازم برای اجرا کپی می‌شوند (ایمیج کوچک‌تر)
+  output: 'standalone',
+  // ریشه‌ی پروژه (تا Next فایل‌های بیرون از پروژه را نگیرد)
+  turbopack: { root: path.dirname(fileURLToPath(import.meta.url)) },
   async redirects() {
     return WP_REDIRECTS.map(([from, to]) => ({ source: encodeURI(from), destination: to, permanent: true }))
   },
