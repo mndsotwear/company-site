@@ -191,6 +191,10 @@ export interface HeroBlock {
   titleAccent?: string | null;
   text?: string | null;
   image?: (number | null) | Media;
+  /**
+   * MP4/WebM, 10–20 s, no sound, about 8 MB max. The background image is shown until the video loads.
+   */
+  video?: (number | null) | Media;
   primary?: {
     label?: string | null;
     /**
@@ -884,6 +888,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
   titleAccent?: T;
   text?: T;
   image?: T;
+  video?: T;
   primary?:
     | T
     | {

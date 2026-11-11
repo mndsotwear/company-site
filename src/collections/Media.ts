@@ -10,7 +10,7 @@ export const Media: CollectionConfig = {
   upload: {
     // عکس‌ها خودکار در چند اندازه و با فرمت WebP ذخیره می‌شوند
     staticDir: 'media',
-    mimeTypes: ['image/*', 'application/pdf'],
+    mimeTypes: ['image/*', 'application/pdf', 'video/mp4', 'video/webm'],
     formatOptions: { format: 'webp', options: { quality: 82 } },
     // هر اندازه هم جداگانه WebP می‌شود؛ بدون این، Payload اندازه‌ها را با فرمت فایل اصلی (مثلاً PNG) می‌سازد
     imageSizes: [

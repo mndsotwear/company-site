@@ -38,6 +38,19 @@ export const HeroBlock: Block = {
     { name: 'titleAccent', type: 'text', label: { fa: 'تیتر خط دوم (رنگی)', en: 'Title line 2 (accent)' }, localized: true },
     { name: 'text', type: 'textarea', label: { fa: 'متن', en: 'Text' }, localized: true },
     { name: 'image', type: 'upload', relationTo: 'media', label: { fa: 'عکس پس‌زمینه', en: 'Background image' } },
+    {
+      name: 'video',
+      type: 'upload',
+      relationTo: 'media',
+      label: { fa: 'ویدیوی پس‌زمینه (اختیاری)', en: 'Background video (optional)' },
+      filterOptions: { mimeType: { contains: 'video' } },
+      admin: {
+        description: {
+          fa: 'فایل MP4 یا WebM، ۱۰ تا ۲۰ ثانیه، بدون صدا، حداکثر حدود ۸ مگابایت. تا ویدیو بارگذاری شود (و روی گوشی با اینترنت کند) همان عکس پس‌زمینه نمایش داده می‌شود.',
+          en: 'MP4/WebM, 10–20 s, no sound, about 8 MB max. The background image is shown until the video loads.',
+        },
+      },
+    },
     linkFields('primary', { fa: 'دکمه اصلی', en: 'Primary button' }),
     linkFields('secondary', { fa: 'دکمه دوم', en: 'Secondary button' }),
     {
