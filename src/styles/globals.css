@@ -1,31 +1,40 @@
 @import 'tailwindcss';
 /* فونت موقت: وزیرمتن (رایگان). اگر فایل‌های ایران‌یکان و پیدا برسد، این خط عوض می‌شود */
 @import 'vazirmatn/Vazirmatn-Variable-font-face.css';
+@import '@fontsource-variable/fraunces/index.css';
 
 /* حالت تیره با کلاس .dark روی <html> فعال می‌شود (توسط next-themes) */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ========== رنگ‌های تم روشن ========== */
+/* ========== طراحی «لوکس تیره» ==========
+   تم اصلی سایت تیره است (سرمه‌ای نزدیک به مشکی، عکس‌های تمام‌عرض، تیترهای درشت، تأکید نارنجی کم و دقیق).
+   تم روشن نسخه‌ی کاغذی همان طراحی است (زمینه‌ی شیری گرم به‌جای سفید خالص). */
+
+/* ---- تم روشن ---- */
 :root {
-  --bg: #f6f8fa;
-  --surface: #ffffff;
-  --text: #071b30;
-  --muted: #4a5b6e;
-  --primary: #0787c2;
-  --accent: #f57c00;
-  --border: #d5e2ec;
+  --bg: #f4f1ea;
+  --surface: #fbfaf7;
+  --surface-2: #ece7dc;
+  --text: #0a1622;
+  --muted: #5b6876;
+  --primary: #0a78ae;
+  --accent: #dd6f0c;
+  --border: #ddd6c8;
+  --hairline: rgb(10 22 34 / 0.1);
   color-scheme: light;
 }
 
-/* ========== رنگ‌های تم تیره ========== */
+/* ---- تم تیره (پیش‌فرض) ---- */
 .dark {
-  --bg: #071b30;
-  --surface: #0c2742;
-  --text: #eaf6ff;
-  --muted: #9fb4c8;
-  --primary: #079fe5;
-  --accent: #f39200;
-  --border: #143852;
+  --bg: #050d17;
+  --surface: #0a1622;
+  --surface-2: #0f1f2e;
+  --text: #f1f4f7;
+  --muted: #8d9eb0;
+  --primary: #4fb8ec;
+  --accent: #f28a1d;
+  --border: #1a2a3a;
+  --hairline: rgb(255 255 255 / 0.08);
   color-scheme: dark;
 }
 
@@ -33,24 +42,38 @@
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-text: var(--text);
   --color-muted: var(--muted);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
   --color-border: var(--border);
+  --color-hairline: var(--hairline);
 
-  /* رنگ‌های ثابت هویت (در هر دو تم یکسان) */
-  --color-navy: #071b30;
-  --color-navy-deep: #003265;
+  /* رنگ‌های ثابت (روی عکس و ویدیو، در هر دو تم یکسان) */
+  --color-navy: #050d17;
+  --color-navy-deep: #0a1a2b;
   --color-ink: #1d1d1d;
-  --color-sky: #079fe5;
-  --color-foam: #eaf6ff;
+  --color-sky: #4fb8ec;
+  --color-foam: #f1f4f7;
 
   --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
+  /* تیترهای لاتین و اعداد درشت: سریف کلاسیک؛ حروف فارسی خودکار وزیرمتن می‌شوند */
+  --font-display: 'Fraunces Variable', 'Vazirmatn', ui-serif, Georgia, serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
   scroll-behavior: smooth;
+}
+/* Lenis (اسکرول نرم) خودش اسکرول را کنترل می‌کند */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 body {
@@ -68,9 +91,65 @@ body {
 /* خطوط کم‌رنگ نقشه‌ی دریایی (عرض و طول جغرافیایی) */
 .chart-grid {
   background-image:
-    linear-gradient(to right, rgb(234 246 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(234 246 255 / 0.06) 1px, transparent 1px);
-  background-size: 96px 96px;
+    linear-gradient(to right, rgb(241 244 247 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(241 244 247 / 0.045) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+/* دانه‌ی ریز فیلم روی عکس‌ها و بخش‌های تیره (حس عکاسی، نه دیجیتال تخت) */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* زیرخط متحرک لینک‌ها */
+.link-line {
+  background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0 1px;
+  transition: background-size 0.5s var(--ease-luxe);
+}
+[dir='ltr'] .link-line {
+  background-position: 0 100%;
+}
+.link-line:hover {
+  background-size: 100% 1px;
+}
+
+/* فاصله‌ی حروف تیترهای لاتین */
+.display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+/* حرکت آرام عکس هیرو وقتی ویدیو نیست */
+@keyframes kenburns {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+.kenburns {
+  animation: kenburns 24s var(--ease-luxe) infinite alternate;
+}
+
+/* نشانگر اسکرول هیرو */
+@keyframes scrollcue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+.scroll-cue {
+  animation: scrollcue 2.2s var(--ease-luxe) infinite;
 }
 
 /* نوار متحرک بنادر */
@@ -90,7 +169,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track {
+  .ticker-track,
+  .kenburns,
+  .scroll-cue {
     animation: none;
   }
   html {
