@@ -4,19 +4,21 @@ import { RichText } from '@/components/ui/RichText'
 import { Section } from '@/components/ui/Section'
 import { Parallax } from '@/components/motion/Parallax'
 import { Reveal, RevealWords } from '@/components/motion/Reveal'
+import { useLocale } from 'next-intl'
 import type { AboutBlock } from '@/payload-types'
 
 // درباره ما: بدون عکس → تیتر بزرگ یک طرف، متن طرف دیگر (چیدمان مجله‌ای)
 //            با عکس → عکس بلند با حرکت پارالاکس یک طرف، تیتر و متن طرف دیگر
 export function AboutSection({ eyebrow, heading, body, image, link }: AboutBlock) {
   const hasImage = Boolean(image && typeof image !== 'number')
+  const locale = useLocale()
 
   const title = (
     <>
       {eyebrow && (
         <Reveal>
           <p className="mb-6 flex items-center gap-4 text-xs tracking-[0.2em] text-muted">
-            <span className="display text-accent">۰۲</span>
+            <span className="display text-accent">{locale === 'fa' ? '۰۲' : '02'}</span>
             <span className="h-px w-10 bg-border" aria-hidden />
             {eyebrow}
           </p>

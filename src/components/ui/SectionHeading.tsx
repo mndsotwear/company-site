@@ -1,4 +1,6 @@
+import { useLocale } from 'next-intl'
 import { RevealWords, Reveal } from '@/components/motion/Reveal'
+import { toLatinDigits } from '@/lib/validate'
 
 type Props = {
   eyebrow?: string | null
@@ -16,14 +18,16 @@ type Props = {
  * چیدمان نامتقارن (تیتر یک طرف، متن طرف دیگر) تا همه‌چیز وسط‌چین نباشد.
  */
 export function SectionHeading({ eyebrow, title, intro, onDark = false, index, className = '' }: Props) {
+  const locale = useLocale()
   if (!eyebrow && !title && !intro) return null
+  const num = index && locale !== 'fa' ? toLatinDigits(index) : index
   return (
     <div className={`mb-14 grid grid-cols-1 gap-8 lg:mb-20 lg:grid-cols-12 lg:items-end ${className}`}>
       <div className="lg:col-span-8">
         {eyebrow && (
           <Reveal>
             <p className={`mb-6 flex items-center gap-4 text-xs tracking-[0.2em] ${onDark ? 'text-foam/60' : 'text-muted'}`}>
-              {index && <span className="display text-accent">{index}</span>}
+              {num && <span className="display text-accent">{num}</span>}
               <span className={`h-px w-10 ${onDark ? 'bg-foam/30' : 'bg-border'}`} aria-hidden />
               {eyebrow}
             </p>
