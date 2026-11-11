@@ -36,7 +36,7 @@ export default async function ContactPage({ params }: Props) {
     <>
       <PageHeader eyebrow={t('contact.eyebrow')} title={t('contact.title')} intro={t('contact.intro')} crumbs={[{ label: t('nav.contact') }]} />
 
-      <Container className="grid gap-12 py-16 lg:grid-cols-12 lg:py-24">
+      <Container className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-12 lg:py-24">
         {/* راه‌های تماس + فرم پیام */}
         <div className="lg:col-span-7">
         <ul className="divide-y divide-border border-y border-border">

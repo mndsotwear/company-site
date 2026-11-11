@@ -75,7 +75,7 @@ export default async function VesselPage({ params }: Props) {
         crumbs={[{ href: '/fleet', label: t('nav.fleet') }, { label: v.name }]}
       />
 
-      <Container className="grid gap-12 py-12 lg:grid-cols-12 lg:py-16">
+      <Container className="grid grid-cols-1 gap-12 py-12 lg:grid-cols-12 lg:py-16">
         <div className="lg:col-span-8">
           {/* گالری */}
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-navy">

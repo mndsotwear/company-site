@@ -5,18 +5,18 @@ type Variant = 'primary' | 'sky' | 'accent' | 'outline' | 'outlineLight' | 'ghos
 type Size = 'md' | 'lg'
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-primary text-white hover:brightness-110',
-  /** آبی روشن روی زمینه‌ی سرمه‌ای (مثل هیرو) */
-  sky: 'bg-sky text-navy hover:brightness-110',
-  accent: 'bg-accent text-white hover:brightness-110',
-  outline: 'border border-border text-text hover:border-primary hover:text-primary',
-  outlineLight: 'border border-foam/40 text-foam hover:border-sky hover:text-sky',
-  ghost: 'text-primary hover:underline underline-offset-8',
+  primary: 'bg-text text-bg hover:bg-accent hover:text-white',
+  /** روشن روی زمینه‌ی تیره */
+  sky: 'bg-foam text-navy hover:bg-accent hover:text-white',
+  accent: 'bg-accent text-white shadow-[0_10px_40px_-10px] shadow-accent/60 hover:brightness-110',
+  outline: 'border border-border text-text hover:border-text',
+  outlineLight: 'border border-white/25 bg-white/[0.04] text-foam backdrop-blur hover:border-white/60 hover:bg-white/10',
+  ghost: 'text-text link-line pb-1',
 }
 
 const SIZES: Record<Size, string> = {
-  md: 'px-5 py-2.5 text-sm',
-  lg: 'px-7 py-3.5 text-base',
+  md: 'px-6 py-3 text-sm',
+  lg: 'px-8 py-4 text-[15px]',
 }
 
 type Props = {
@@ -31,7 +31,7 @@ const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href)
 
 /** دکمه‌ی لینک؛ آدرس داخلی (مثل /quote) زبان فعلی را حفظ می‌کند */
 export function Button({ href, children, variant = 'primary', size = 'md', className = '' }: Props) {
-  const cls = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition ${VARIANTS[variant]} ${SIZES[size]} ${className}`
+  const cls = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition duration-500 ease-[var(--ease-luxe)] ${VARIANTS[variant]} ${SIZES[size]} ${className}`
   if (isExternal(href)) {
     const newTab = href.startsWith('http')
     return (

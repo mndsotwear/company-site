@@ -6,7 +6,7 @@ export function FAQSection({ heading, items }: FAQBlock) {
   if (!items?.length) return null
   return (
     <Section>
-      <div className="grid gap-10 lg:grid-cols-12">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
         {heading && <h2 className="text-3xl font-extrabold lg:col-span-4">{heading}</h2>}
         <div className="divide-y divide-border border-y border-border lg:col-span-8">
           {items.map((q) => (

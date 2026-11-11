@@ -30,7 +30,7 @@ export default async function QuotePage({ params, searchParams }: Props) {
   return (
     <>
       <PageHeader eyebrow={t('quote.eyebrow')} title={t('quote.title')} intro={t('quote.intro')} crumbs={[{ label: t('nav.quote') }]} />
-      <Container className="grid gap-10 py-12 lg:grid-cols-12 lg:py-16">
+      <Container className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-12 lg:py-16">
         <div className="lg:col-span-8">
           <QuoteForm defaultService={defaultService} />
         </div>

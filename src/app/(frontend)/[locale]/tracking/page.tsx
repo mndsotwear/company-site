@@ -43,7 +43,7 @@ export default async function TrackingPage({ params, searchParams }: Props) {
   return (
     <>
       <PageHeader eyebrow={t('tracking.eyebrow')} title={t('tracking.title')} intro={t('tracking.intro')} crumbs={[{ label: t('nav.tracking') }]} />
-      <Container className="grid gap-10 py-12 lg:grid-cols-12 lg:py-16">
+      <Container className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-12 lg:py-16">
         <div className="space-y-8 lg:col-span-8">
           <form action={`/${locale}/tracking`} method="get" className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
             <label htmlFor="track-code" className="block font-bold">

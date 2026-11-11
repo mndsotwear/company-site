@@ -1,21 +1,28 @@
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
+import { RevealWords, Reveal } from '@/components/motion/Reveal'
 import type { CTABlock } from '@/payload-types'
 
-// فراخوان: نوار کوتاه با تیتر و یک دکمه‌ی نارنجی
+// فراخوان پایانی: نوار تیره‌ی تمام‌عرض با تیتر بسیار درشت و نور نارنجی ملایم
 export function CTASection({ heading, text, link }: CTABlock) {
   return (
-    <section className="bg-bg py-16">
+    <section className="grain relative isolate overflow-hidden bg-navy py-28 text-foam lg:py-40">
+      <div className="pointer-events-none absolute -bottom-40 start-1/2 -z-10 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px] rtl:translate-x-1/2" aria-hidden />
+      <div className="chart-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
       <Container>
-        <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-border bg-surface p-8 sm:p-10 md:flex-row md:items-center">
-          <div>
-            {heading && <h2 className="text-2xl font-extrabold sm:text-3xl">{heading}</h2>}
-            {text && <p className="mt-2 text-muted">{text}</p>}
-          </div>
+        <div className="max-w-4xl">
+          {heading && <RevealWords text={heading} className="text-4xl font-black leading-[1.25] sm:text-6xl lg:text-7xl" />}
+          {text && (
+            <Reveal delay={0.25}>
+              <p className="mt-8 max-w-xl text-lg leading-8 text-foam/65">{text}</p>
+            </Reveal>
+          )}
           {link?.label && (
-            <Button href={link.href || '/contact'} variant="accent" size="lg" className="shrink-0">
-              {link.label}
-            </Button>
+            <Reveal delay={0.4}>
+              <Button href={link.href || '/contact'} variant="accent" size="lg" className="mt-12">
+                {link.label}
+              </Button>
+            </Reveal>
           )}
         </div>
       </Container>

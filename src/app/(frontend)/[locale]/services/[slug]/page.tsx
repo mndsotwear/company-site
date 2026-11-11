@@ -48,7 +48,7 @@ export default async function ServicePage({ params }: Props) {
         crumbs={[{ href: '/services', label: t('nav.services') }, { label: service.title }]}
       />
 
-      <Container className="grid gap-14 py-16 lg:grid-cols-12 lg:py-24">
+      <Container className="grid grid-cols-1 gap-14 py-16 lg:grid-cols-12 lg:py-24">
         <article className="lg:col-span-8">
           {hasImage && (
             <div className="relative mb-12 aspect-[16/9] overflow-hidden rounded-2xl">

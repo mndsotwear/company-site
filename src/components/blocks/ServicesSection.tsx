@@ -3,6 +3,7 @@ import { Link } from '@/i18n/navigation'
 import { MaritimeIcon } from '@/components/icons/MaritimeIcon'
 import { Section } from '@/components/ui/Section'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Reveal } from '@/components/motion/Reveal'
 import { getPayloadClient, type Locale } from '@/lib/payload'
 import type { Service, ServicesBlock } from '@/payload-types'
 
@@ -26,26 +27,37 @@ export async function ServicesSection({ eyebrow, heading, intro, services }: Ser
   }
   if (!items.length) return null
 
+  const num = (i: number) => (i + 1).toLocaleString(locale === 'fa' ? 'fa-IR' : 'en-US', { minimumIntegerDigits: 2 })
+
+  // فهرست مجله‌ای: هر خدمت یک ردیف بزرگ با شماره، تیتر، خلاصه و فلش؛ با هاور روشن می‌شود
   return (
     <Section tone="navy" grid>
-      <SectionHeading eyebrow={eyebrow} title={heading} intro={intro} onDark />
-      <ul className={`grid gap-4 ${items.length >= 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : items.length === 2 ? 'sm:grid-cols-2' : ''}`}>
+      <SectionHeading eyebrow={eyebrow} title={heading} intro={intro} onDark index="۰۱" />
+      <ul className="border-b border-white/10">
         {items.map((s, i) => (
-          <li key={s.id}>
-            <Link href={`/services/${s.slug}`} className="group flex h-full flex-col rounded-2xl border border-foam/10 bg-navy p-8 transition hover:border-sky/60 hover:bg-[#0c2742]">
-              <div className="flex items-start justify-between">
-                <span className="text-sky">
-                  <MaritimeIcon name={s.icon} className="h-9 w-9" />
+          <Reveal as="li" key={s.id} delay={i * 0.08}>
+            <Link
+              href={`/services/${s.slug}`}
+              className="group grid grid-cols-1 items-center gap-4 border-t border-white/10 py-8 transition-colors duration-500 hover:bg-white/[0.03] sm:grid-cols-12 sm:gap-8 sm:px-4 lg:py-10"
+            >
+              <span className="display text-sm text-foam/35 sm:col-span-1">{num(i)}</span>
+              <span className="flex items-center gap-5 sm:col-span-5">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-white/10 text-sky transition duration-500 group-hover:border-accent group-hover:text-accent">
+                  <MaritimeIcon name={s.icon} className="h-7 w-7" />
                 </span>
-                <span className="text-xs tabular-nums text-foam/30">{String(i + 1).padStart(2, '0')}</span>
-              </div>
-              <h3 className="mt-8 text-xl font-bold">{s.title}</h3>
-              {s.summary && <p className="mt-3 text-sm leading-7 text-foam/65">{s.summary}</p>}
-              <span className="mt-auto pt-8 text-sm text-sky opacity-80 transition group-hover:opacity-100">
-                {t('more')} {t('arrow')}
+                <h3 className="text-2xl font-bold transition-transform duration-500 ease-[var(--ease-luxe)] group-hover:-translate-x-2 ltr:group-hover:translate-x-2 lg:text-3xl">
+                  {s.title}
+                </h3>
+              </span>
+              {s.summary && <p className="text-sm leading-7 text-foam/55 sm:col-span-5">{s.summary}</p>}
+              <span
+                className="hidden justify-self-end text-2xl text-foam/40 transition duration-500 group-hover:text-accent sm:col-span-1 sm:block rtl:rotate-180"
+                aria-label={t('more')}
+              >
+                →
               </span>
             </Link>
-          </li>
+          </Reveal>
         ))}
       </ul>
     </Section>
