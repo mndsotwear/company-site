@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageHeader } from '@/components/sections/PageHeader'
 import { Container } from '@/components/ui/Container'
 import { VesselCard } from '@/components/vessels/VesselCard'
+import { CompareBar } from '@/components/vessels/CompareBar'
+import { CompareToggle } from '@/components/vessels/CompareToggle'
 import { VESSEL_STATUS_OPTIONS, VESSEL_TYPE_OPTIONS } from '@/lib/options'
 import type { Locale } from '@/lib/payload'
 import { getVessels } from '@/lib/vessels'
@@ -71,8 +73,9 @@ export default async function FleetPage({ params, searchParams }: Props) {
         {vessels.length ? (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {vessels.map((v) => (
-              <li key={v.id}>
+              <li key={v.id} className="relative">
                 <VesselCard vessel={v} locale={l} />
+                <CompareToggle slug={v.slug!} name={v.name} />
               </li>
             ))}
           </ul>
@@ -82,6 +85,7 @@ export default async function FleetPage({ params, searchParams }: Props) {
             <p className="mt-2 text-sm text-muted">{t('fleet.emptyHint')}</p>
           </div>
         )}
+        <CompareBar />
       </Container>
     </>
   )
