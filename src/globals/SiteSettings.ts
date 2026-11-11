@@ -141,6 +141,44 @@ export const SiteSettings: GlobalConfig = {
             },
           ],
         },
+        {
+          label: { fa: 'رهگیری', en: 'Tracking' },
+          fields: [
+            {
+              name: 'trackingSms',
+              type: 'checkbox',
+              defaultValue: false,
+              label: { fa: 'ارسال پیامک به مشتری وقتی وضعیت خودرو عوض می‌شود', en: 'SMS the customer when a vehicle status changes' },
+              admin: {
+                description: {
+                  fa: 'فقط برای شماره‌های موبایل ایران و فقط وقتی «وضعیت» تغییر کند (با ورود اکسل یا ویرایش دستی). اولین ثبت خودرو پیامک نمی‌فرستد.',
+                  en: 'Iranian mobiles only, and only when the status changes. First registration does not send an SMS.',
+                },
+              },
+            },
+            {
+              name: 'statusTranslations',
+              type: 'array',
+              label: { fa: 'ترجمه‌ی وضعیت‌ها برای نسخه‌ی انگلیسی', en: 'Status translations (English site)' },
+              labels: { singular: { fa: 'وضعیت', en: 'Status' }, plural: { fa: 'وضعیت‌ها', en: 'Statuses' } },
+              admin: {
+                description: {
+                  fa: 'وضعیت‌ها و محل‌ها همان متن اکسل‌اند. اگر اینجا ترجمه‌ای ثبت شود، در سایت انگلیسی به‌جای متن فارسی نمایش داده می‌شود.',
+                  en: 'Statuses and locations come from Excel as written. Add an English text here to show it on the English site.',
+                },
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'fa', type: 'text', label: { fa: 'متن فارسی (دقیقاً مثل اکسل)', en: 'Persian text (as in Excel)' }, required: true },
+                    { name: 'en', type: 'text', label: { fa: 'ترجمه‌ی انگلیسی', en: 'English' }, required: true },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
 import { chassisLast6, normalizeChassis } from '../lib/chassis'
+import { sendSms } from '../lib/notify'
+import { isIranMobile } from '../lib/validate'
 
 // خودروها/محموله‌هایی که مشتری با ۶ رقم آخر شاسی رهگیری می‌کند.
 // معمولاً از «ورود اکسل» پر می‌شود، ولی دستی هم قابل افزودن و ویرایش است.
@@ -25,6 +27,23 @@ export const Shipments: CollectionConfig = {
   defaultSort: '-updatedAt',
   access: { read: loggedIn, create: loggedIn, update: loggedIn, delete: adminOnly },
   hooks: {
+    afterChange: [
+      // پیامک به مشتری وقتی وضعیت عوض شد (اگر در «تنظیمات سایت ← رهگیری» روشن باشد)
+      async ({ doc, previousDoc, operation, req }) => {
+        if (operation !== 'update' || !doc.status || doc.status === previousDoc?.status) return doc
+        if (!doc.customerPhone || !isIranMobile(doc.customerPhone)) return doc
+        const settings = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
+        if (!settings.trackingSms) return doc
+        const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shahinmarine.com').replace(/^https?:\/\//, '')
+        const where = doc.currentLocation ? ` - محل: ${doc.currentLocation}` : ''
+        void sendSms(
+          req.payload,
+          doc.customerPhone,
+          `شاهین مارین: وضعیت خودروی شما (${doc.model || 'شاسی'} ...${doc.chassisLast6}): ${doc.status}${where}\nپیگیری: ${site}/fa/tracking?code=${doc.chassisLast6}`,
+        )
+        return doc
+      },
+    ],
     beforeChange: [
       // ثبت خودکار تاریخچه وقتی وضعیت یا محل تغییر می‌کند
       ({ data, originalDoc, operation, context }) => {

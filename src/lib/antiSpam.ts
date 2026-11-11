@@ -33,3 +33,9 @@ export function looksLikeBot(fd: FormData, minMs = 3000): boolean {
   const started = Number(fd.get('_t') ?? 0)
   return !started || Date.now() - started < minMs
 }
+
+/** آیا این کلید از سقف مجاز گذشته؟ (بدون ثبت یک بار جدید) */
+export function isOverLimit(key: string, max: number, windowMs: number): boolean {
+  const now = Date.now()
+  return (hits.get(key) || []).filter((t) => now - t < windowMs).length >= max
+}
