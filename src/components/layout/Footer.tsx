@@ -35,11 +35,11 @@ export async function Footer() {
   const wa = whatsappLink(s.whatsapp || phone)
 
   return (
-    <footer className="text-foam">
-      <div className="bg-navy-deep">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-3">
-          <div>
-            <p className="text-lg font-bold">{t('meta.siteName')}</p>
+    <footer className="grain relative overflow-hidden bg-navy text-foam">
+      <div className="border-t border-white/10">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 px-5 pb-10 pt-20 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <p className="text-2xl font-black">{t('meta.siteName')}</p>
             <p className="mt-3 max-w-xs text-sm leading-7 text-foam/70">{s.footerAbout || t('meta.description')}</p>
             {!!s.socials?.length && (
               <ul className="mt-5 flex flex-wrap gap-2">
@@ -49,7 +49,7 @@ export async function Footer() {
                       href={so.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block rounded-full border border-foam/20 px-3 py-1.5 text-xs text-foam/80 transition hover:border-sky hover:text-sky"
+                      className="inline-block rounded-full border border-foam/20 px-3 py-1.5 text-xs text-foam/80 transition hover:border-accent hover:text-accent"
                     >
                       {SOCIAL_NAMES[so.platform]?.[locale] ?? so.platform}
                     </a>
@@ -59,12 +59,12 @@ export async function Footer() {
             )}
           </div>
 
-          <div>
-            <p className="mb-4 font-semibold">{t('footer.contactTitle')}</p>
+          <div className="md:col-span-4">
+            <p className="mb-5 text-xs tracking-[0.2em] text-foam/45">{t('footer.contactTitle')}</p>
             <ul className="space-y-3 text-sm text-foam/80">
               <li>
                 {s.mapUrl ? (
-                  <a href={s.mapUrl} target="_blank" rel="noopener noreferrer" className="hover:text-sky">
+                  <a href={s.mapUrl} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
                     {address}
                   </a>
                 ) : (
@@ -72,18 +72,18 @@ export async function Footer() {
                 )}
               </li>
               <li>
-                <a href={`mailto:${email}`} className="ltr-nums hover:text-sky">
+                <a href={`mailto:${email}`} className="ltr-nums hover:text-accent">
                   {email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${phone}`} className="ltr-nums hover:text-sky">
+                <a href={`tel:${phone}`} className="ltr-nums hover:text-accent">
                   {phone}
                 </a>
               </li>
               {wa && (
                 <li>
-                  <a href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-sky">
+                  <a href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
                     {t('footer.whatsapp')}
                   </a>
                 </li>
@@ -91,12 +91,12 @@ export async function Footer() {
             </ul>
           </div>
 
-          <div>
-            <p className="mb-4 font-semibold">{t('footer.linksTitle')}</p>
+          <div className="md:col-span-3">
+            <p className="mb-5 text-xs tracking-[0.2em] text-foam/45">{t('footer.linksTitle')}</p>
             <ul className="grid grid-cols-2 gap-3 text-sm text-foam/80">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="hover:text-sky">
+                  <Link href={l.href} className="hover:text-accent">
                     {l.label}
                   </Link>
                 </li>
@@ -106,11 +106,18 @@ export async function Footer() {
         </div>
       </div>
 
-      <div className="bg-ink">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-5 py-4 pb-20 text-xs text-foam/60 sm:flex-row sm:pb-4">
+      {/* نام شرکت با حروف بسیار درشت و کم‌رنگ — امضای پایین صفحه */}
+      <div className="pointer-events-none select-none overflow-hidden px-5" aria-hidden>
+        <p className="mx-auto max-w-7xl translate-y-[18%] whitespace-nowrap text-[18vw] font-black leading-none text-white/[0.04] lg:text-[13rem]">
+          {t('meta.siteName')}
+        </p>
+      </div>
+
+      <div className="relative border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-5 py-5 pb-24 text-xs text-foam/50 sm:flex-row sm:pb-5">
           <p>{t('footer.rights')}</p>
           <div className="flex gap-5">
-            <Link href="/privacy" className="hover:text-sky">
+            <Link href="/privacy" className="hover:text-accent">
               {t('footer.privacy')}
             </Link>
             <span>{t('footer.credit')}</span>

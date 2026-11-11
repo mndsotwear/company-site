@@ -6,15 +6,16 @@ export function Logo({ light, dark, name, tagline }: Props) {
   if (light || dark) {
     return (
       <>
-        <img src={(light || dark)!} alt={name} className="h-10 w-auto dark:hidden" />
-        <img src={(dark || light)!} alt={name} className="hidden h-10 w-auto dark:block" />
+        {/* روی عکس (هدر شفاف) و در تم تیره نسخه‌ی روشن لوگو، در تم روشن بعد از اسکرول نسخه‌ی تیره */}
+        <img src={(light || dark)!} alt={name} className="hidden h-10 w-auto group-data-[solid=true]:block dark:!hidden" />
+        <img src={(dark || light)!} alt={name} className="block h-10 w-auto group-data-[solid=true]:hidden dark:!block" />
       </>
     )
   }
   return (
-    <span className="flex items-baseline gap-2 text-text">
-      <span className="text-xl font-extrabold tracking-tight">{name}</span>
-      <span className="hidden text-xs text-muted sm:inline">{tagline}</span>
+    <span className="flex items-baseline gap-3 whitespace-nowrap text-current">
+      <span className="text-xl font-black tracking-tight">{name}</span>
+      <span className="hidden text-[11px] uppercase tracking-[0.2em] opacity-60 xl:inline">{tagline}</span>
     </span>
   )
 }

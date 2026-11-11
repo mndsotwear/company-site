@@ -19,7 +19,7 @@ export function ThemeToggle({ labels }: Props) {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label={label}
       title={label}
-      className="grid h-10 w-10 place-items-center rounded-full border border-border text-text transition hover:border-primary hover:text-primary"
+      className="grid h-10 w-10 place-items-center rounded-full border border-current/20 text-current transition hover:border-accent hover:text-accent"
     >
       {!mounted ? (
         <span className="block h-5 w-5" />

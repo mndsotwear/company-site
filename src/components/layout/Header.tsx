@@ -5,6 +5,7 @@ import { ThemeToggle } from './ThemeToggle'
 import { LocaleSwitcher } from './LocaleSwitcher'
 import { MobileMenu } from './MobileMenu'
 import { Logo } from './Logo'
+import { HeaderShell } from './HeaderShell'
 
 // منوی پیش‌فرض؛ اگر در پنل (تنظیمات سایت ← منو) لینکی تعریف شود، آن جایگزین می‌شود
 const DEFAULT_NAV = [
@@ -27,8 +28,8 @@ export async function Header() {
   const quote = { href: '/quote', label: t('nav.quote') }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg">
-      <div className="relative mx-auto flex h-18 max-w-7xl items-center justify-between gap-6 px-5">
+    <HeaderShell>
+      <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-5">
         <Link href="/" aria-label={t('meta.siteName')}>
           <Logo
             light={mediaUrl(settings.logo)}
@@ -39,10 +40,10 @@ export async function Header() {
         </Link>
 
         <nav className="hidden lg:block" aria-label={t('nav.menu')}>
-          <ul className="flex items-center gap-7 text-[15px]">
+          <ul className="flex items-center gap-5 whitespace-nowrap text-[15px] xl:gap-8">
             {items.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-text transition hover:text-primary">
+                <Link href={item.href} className="link-line pb-1 opacity-85 transition hover:opacity-100">
                   {item.label}
                 </Link>
               </li>
@@ -55,13 +56,14 @@ export async function Header() {
           <ThemeToggle labels={{ toLight: t('theme.toLight'), toDark: t('theme.toDark') }} />
           <Link
             href="/quote"
-            className="hidden rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 lg:inline-block"
+            className="group/q hidden items-center gap-2 whitespace-nowrap rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 lg:inline-flex"
           >
             {quote.label}
+            <span aria-hidden className="transition-transform duration-500 rtl:rotate-180 rtl:group-hover/q:-translate-x-1 ltr:group-hover/q:translate-x-1">→</span>
           </Link>
           <MobileMenu items={items} quote={quote} labels={{ menu: t('nav.menu'), close: t('nav.close') }} />
         </div>
       </div>
-    </header>
+    </HeaderShell>
   )
 }

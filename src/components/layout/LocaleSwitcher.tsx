@@ -15,7 +15,7 @@ export function LocaleSwitcher({ label, ariaLabel }: Props) {
       href={pathname}
       locale={other}
       aria-label={ariaLabel}
-      className="rounded-full border border-border px-3 py-2 text-sm text-text transition hover:border-primary hover:text-primary"
+      className="rounded-full border border-current/20 px-3 py-2 text-sm text-current transition hover:border-accent hover:text-accent"
     >
       {label}
     </Link>
