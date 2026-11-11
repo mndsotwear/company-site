@@ -218,5 +218,35 @@
       "title": "Thank you! We received your inquiry.",
       "text": "Your inquiry about {vessel} has been received. Our team will contact you soon."
     }
+  },
+  "tracking": {
+    "eyebrow": "Vehicle tracking",
+    "title": "Where is your vehicle?",
+    "intro": "Enter the last 6 characters of the chassis number to see the latest status and location.",
+    "label": "Last 6 characters of the chassis number",
+    "hint": "The chassis number (VIN) is on the vehicle card and the bill of lading. Letters are accepted too.",
+    "button": "Track",
+    "found": "{count, plural, =1 {One vehicle found} other {{count, number} vehicles match this number}}",
+    "foundHint": "If several vehicles are shown, find yours by model and color.",
+    "chassis": "Chassis",
+    "model": "Model",
+    "color": "Color",
+    "status": "Status",
+    "location": "Current location",
+    "updated": "Last updated",
+    "note": "Note",
+    "history": "History",
+    "noStatus": "No status recorded yet",
+    "notFoundTitle": "No vehicle found with this number",
+    "notFoundText": "Please check the number. If the vehicle was handed over recently, its details may not be recorded yet.",
+    "helpTitle": "No chassis number, or the result looks wrong?",
+    "helpText": "Contact us and we will check your vehicle's status for you.",
+    "call": "Call",
+    "whatsapp": "Message on WhatsApp",
+    "errors": {
+      "invalid": "Please enter exactly the last 6 characters of the chassis number.",
+      "rate": "Too many searches. Please try again in a few minutes.",
+      "error": "Something went wrong. Please try again or call us."
+    }
   }
 }

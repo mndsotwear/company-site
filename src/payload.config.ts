@@ -14,6 +14,8 @@ import { Services } from './collections/Services'
 import { Vessels } from './collections/Vessels'
 import { VesselInquiries } from './collections/VesselInquiries'
 import { QuoteRequests } from './collections/QuoteRequests'
+import { Shipments } from './collections/Shipments'
+import { ShipmentImports } from './collections/ShipmentImports'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -28,7 +30,7 @@ export default buildConfig({
   },
 
   // بخش‌های پنل
-  collections: [Pages, Services, Vessels, VesselInquiries, QuoteRequests, Media, Users],
+  collections: [Pages, Services, Vessels, VesselInquiries, QuoteRequests, Shipments, ShipmentImports, Media, Users],
   globals: [SiteSettings],
 
   // ویرایشگر متن

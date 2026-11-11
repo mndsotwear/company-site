@@ -6,6 +6,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // کتابخانه‌ی خواندن اکسل فقط سمت سرور و بدون باندل شدن اجرا شود
+  serverExternalPackages: ['exceljs'],
   images: {
     formats: ['image/avif', 'image/webp'],
   },

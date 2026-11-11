@@ -19,6 +19,7 @@
     "@payloadcms/richtext-lexical": "3.93.0",
     "@payloadcms/translations": "3.93.0",
     "@payloadcms/ui": "3.93.0",
+    "exceljs": "4.4.0",
     "graphql": "^16.9.0",
     "next": "16.4.5",
     "next-intl": "^4.3.0",

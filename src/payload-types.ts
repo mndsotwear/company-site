@@ -72,6 +72,8 @@ export interface Config {
     vessels: Vessel;
     'vessel-inquiries': VesselInquiry;
     'quote-requests': QuoteRequest;
+    shipments: Shipment;
+    'shipment-imports': ShipmentImport;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -86,6 +88,8 @@ export interface Config {
     vessels: VesselsSelect<false> | VesselsSelect<true>;
     'vessel-inquiries': VesselInquiriesSelect<false> | VesselInquiriesSelect<true>;
     'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
+    shipments: ShipmentsSelect<false> | ShipmentsSelect<true>;
+    'shipment-imports': ShipmentImportsSelect<false> | ShipmentImportsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -614,6 +618,77 @@ export interface QuoteRequest {
   createdAt: string;
 }
 /**
+ * Each change of status or location adds a history entry that the customer can see.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipments".
+ */
+export interface Shipment {
+  id: number;
+  /**
+   * Spaces/dashes removed, uppercased.
+   */
+  chassis: string;
+  /**
+   * Generated automatically.
+   */
+  chassisLast6?: string | null;
+  model?: string | null;
+  color?: string | null;
+  status?: string | null;
+  currentLocation?: string | null;
+  /**
+   * Shown on the tracking page.
+   */
+  note?: string | null;
+  customerName?: string | null;
+  customerPhone?: string | null;
+  history?:
+    | {
+        date: string;
+        status?: string | null;
+        location?: string | null;
+        note?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Upload an .xlsx file. Columns are matched by name: chassis (required), customer name, customer phone, model, color, current location, status, note, date. Existing chassis are updated, new ones added.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipment-imports".
+ */
+export interface ShipmentImport {
+  id: number;
+  summary?: string | null;
+  total?: number | null;
+  created?: number | null;
+  updated?: number | null;
+  unchanged?: number | null;
+  failed?: number | null;
+  rowErrors?:
+    | {
+        row?: number | null;
+        message?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -684,6 +759,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'quote-requests';
         value: number | QuoteRequest;
+      } | null)
+    | ({
+        relationTo: 'shipments';
+        value: number | Shipment;
+      } | null)
+    | ({
+        relationTo: 'shipment-imports';
+        value: number | ShipmentImport;
       } | null)
     | ({
         relationTo: 'media';
@@ -1072,6 +1155,62 @@ export interface QuoteRequestsSelect<T extends boolean = true> {
   internalNote?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipments_select".
+ */
+export interface ShipmentsSelect<T extends boolean = true> {
+  chassis?: T;
+  chassisLast6?: T;
+  model?: T;
+  color?: T;
+  status?: T;
+  currentLocation?: T;
+  note?: T;
+  customerName?: T;
+  customerPhone?: T;
+  history?:
+    | T
+    | {
+        date?: T;
+        status?: T;
+        location?: T;
+        note?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipment-imports_select".
+ */
+export interface ShipmentImportsSelect<T extends boolean = true> {
+  summary?: T;
+  total?: T;
+  created?: T;
+  updated?: T;
+  unchanged?: T;
+  failed?: T;
+  rowErrors?:
+    | T
+    | {
+        row?: T;
+        message?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
