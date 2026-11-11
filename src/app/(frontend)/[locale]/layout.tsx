@@ -9,6 +9,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { FloatingQuote } from '@/components/layout/FloatingQuote'
+import { SmoothScroll } from '@/components/motion/SmoothScroll'
 import '@/styles/globals.css'
 
 type Props = { children: ReactNode; params: Promise<{ locale: string }> }
@@ -38,6 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen font-sans antialiased">
         <NextIntlClientProvider>
           <ThemeProvider>
+            <SmoothScroll />
             <Header />
             <main>{children}</main>
             <Footer />
