@@ -66,8 +66,29 @@ export default async function VesselPage({ params }: Props) {
   const wa = whatsappLink(settings.whatsapp || settings.phone)
   const phone = settings.phone || '09366334228'
 
+  // اطلاعات ساختاریافته‌ی کالا (Product) برای نمایش بهتر در گوگل
+  const productLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: v.name,
+    description: v.summary || undefined,
+    image: mediaUrl(v.gallery?.[0], 'card') || undefined,
+    category: labelOf(VESSEL_TYPE_OPTIONS, v.vesselType, l),
+    ...(v.price?.show && v.price.amount && v.price.currency !== 'IRT'
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price: v.price.amount,
+            priceCurrency: v.price.currency || 'USD',
+            availability: v.status === 'sold' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+          },
+        }
+      : {}),
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
       <PageHeader
         eyebrow={labelOf(VESSEL_TYPE_OPTIONS, v.vesselType, l)}
         title={v.name}

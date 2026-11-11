@@ -37,6 +37,21 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body className="min-h-screen font-sans antialiased">
+        {/* اطلاعات ساختاریافته‌ی شرکت برای گوگل (Organization) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: locale === 'fa' ? 'شاهین مارین' : 'Shahin Marine',
+              url: process.env.NEXT_PUBLIC_SITE_URL || 'https://shahinmarine.com',
+              email: 'shahin.marine1@gmail.com',
+              telephone: '+989366334228',
+              address: { '@type': 'PostalAddress', addressLocality: locale === 'fa' ? 'آبادان' : 'Abadan', addressCountry: 'IR' },
+            }),
+          }}
+        />
         <NextIntlClientProvider>
           <ThemeProvider>
             <SmoothScroll />
