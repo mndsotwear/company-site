@@ -223,8 +223,8 @@
     "eyebrow": "Vehicle tracking",
     "title": "Where is your vehicle?",
     "intro": "Enter the last 6 characters of the chassis number to see the latest status and location.",
-    "label": "Last 6 characters of the chassis number",
-    "hint": "The chassis number (VIN) is on the vehicle card and the bill of lading. Letters are accepted too.",
+    "label": "Last 6 characters of the chassis number, or a quote number",
+    "hint": "The chassis number (VIN) is on the vehicle card and the bill of lading. To follow a quote request, enter its number (e.g. Q-1405-0001).",
     "button": "Track",
     "found": "{count, plural, =1 {One vehicle found} other {{count, number} vehicles match this number}}",
     "foundHint": "If several vehicles are shown, find yours by model and color.",
@@ -237,7 +237,7 @@
     "note": "Note",
     "history": "History",
     "noStatus": "No status recorded yet",
-    "notFoundTitle": "No vehicle found with this number",
+    "notFoundTitle": "Nothing found for this number",
     "notFoundText": "Please check the number. If the vehicle was handed over recently, its details may not be recorded yet.",
     "helpTitle": "No chassis number, or the result looks wrong?",
     "helpText": "Contact us and we will check your vehicle's status for you.",
@@ -246,7 +246,61 @@
     "errors": {
       "invalid": "Please enter exactly the last 6 characters of the chassis number.",
       "rate": "Too many searches. Please try again in a few minutes.",
-      "error": "Something went wrong. Please try again or call us."
+      "error": "Something went wrong. Please try again or call us.",
+      "captcha": "To continue, confirm you are not a robot and press Track again."
+    },
+    "quoteTitle": "Quote request",
+    "route": "Route",
+    "cargo": "Cargo",
+    "submitted": "Submitted",
+    "quoteStatus": {
+      "new": "Received",
+      "in-review": "In review",
+      "answered": "Answered"
+    },
+    "quoteHint": {
+      "new": "Your request has been received and will be reviewed shortly.",
+      "in-review": "Our team is preparing your quote.",
+      "answered": "We have sent you our answer. If you haven't received it, please call us."
     }
+  },
+  "contactForm": {
+    "title": "Send us a message",
+    "intro": "Your message goes straight to our team and we reply as soon as possible.",
+    "name": "Name",
+    "subject": "Subject",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "contactHint": "Please enter a phone number or email so we can reply.",
+    "submit": "Send message",
+    "sending": "Sending…",
+    "errors": {
+      "name": "Please enter your name.",
+      "phone": "A valid phone number or email is required.",
+      "email": "Email is not valid.",
+      "message": "Please write your message.",
+      "rate": "Too many messages. Please try again in a few minutes.",
+      "server": "Something went wrong. Please try again or call us.",
+      "invalid": "Some fields are not filled in correctly."
+    },
+    "success": {
+      "eyebrow": "Message sent",
+      "title": "Thank you for your message",
+      "text": "Our team will get back to you shortly."
+    }
+  },
+  "compare": {
+    "add": "Compare",
+    "full": "You can compare up to 3 vessels",
+    "selected": "{count, plural, =1 {One vessel selected} other {{count, number} vessels selected}}",
+    "clear": "Clear",
+    "go": "Compare",
+    "pickMore": "Pick one more vessel",
+    "title": "Compare vessels",
+    "intro": "See the specifications of the selected vessels side by side.",
+    "needTwo": "Select at least two vessels to compare.",
+    "back": "Back to vessels for sale",
+    "bestHint": "Orange values are the highest in their row."
   }
 }

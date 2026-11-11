@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageHeader } from '@/components/sections/PageHeader'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
+import { ContactForm } from '@/components/forms/ContactForm'
 import { getSiteSettings, whatsappLink, type Locale } from '@/lib/payload'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -14,7 +15,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // تماس با ما: همه‌ی اطلاعات از «تنظیمات سایت» در پنل
-// فرم ارسال پیام در فاز ۴ (همراه با بقیه‌ی فرم‌ها) اضافه می‌شود.
 export default async function ContactPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
@@ -37,8 +37,9 @@ export default async function ContactPage({ params }: Props) {
       <PageHeader eyebrow={t('contact.eyebrow')} title={t('contact.title')} intro={t('contact.intro')} crumbs={[{ label: t('nav.contact') }]} />
 
       <Container className="grid gap-12 py-16 lg:grid-cols-12 lg:py-24">
-        {/* راه‌های تماس */}
-        <ul className="divide-y divide-border border-y border-border lg:col-span-7">
+        {/* راه‌های تماس + فرم پیام */}
+        <div className="lg:col-span-7">
+        <ul className="divide-y divide-border border-y border-border">
           {channels.map((c) => (
             <li key={c.label}>
               <a
@@ -57,6 +58,12 @@ export default async function ContactPage({ params }: Props) {
             </li>
           ))}
         </ul>
+          <div className="mt-14" id="message">
+            <h2 className="text-2xl font-extrabold">{t('contactForm.title')}</h2>
+            <p className="mt-2 mb-8 text-muted">{t('contactForm.intro')}</p>
+            <ContactForm />
+          </div>
+        </div>
 
         {/* دفتر و نقشه */}
         <div className="lg:col-span-5">

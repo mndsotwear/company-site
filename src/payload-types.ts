@@ -72,6 +72,7 @@ export interface Config {
     vessels: Vessel;
     'vessel-inquiries': VesselInquiry;
     'quote-requests': QuoteRequest;
+    'contact-messages': ContactMessage;
     shipments: Shipment;
     'shipment-imports': ShipmentImport;
     media: Media;
@@ -88,6 +89,7 @@ export interface Config {
     vessels: VesselsSelect<false> | VesselsSelect<true>;
     'vessel-inquiries': VesselInquiriesSelect<false> | VesselInquiriesSelect<true>;
     'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     shipments: ShipmentsSelect<false> | ShipmentsSelect<true>;
     'shipment-imports': ShipmentImportsSelect<false> | ShipmentImportsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -618,6 +620,22 @@ export interface QuoteRequest {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  subject?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  message: string;
+  status: 'new' | 'answered' | 'archived';
+  internalNote?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Each change of status or location adds a history entry that the customer can see.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -759,6 +777,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'quote-requests';
         value: number | QuoteRequest;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null)
     | ({
         relationTo: 'shipments';
@@ -1158,6 +1180,21 @@ export interface QuoteRequestsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  subject?: T;
+  phone?: T;
+  email?: T;
+  message?: T;
+  status?: T;
+  internalNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "shipments_select".
  */
 export interface ShipmentsSelect<T extends boolean = true> {
@@ -1375,6 +1412,20 @@ export interface SiteSetting {
   footerAbout?: string | null;
   notifyPhone?: string | null;
   notifyEmail?: string | null;
+  /**
+   * Iranian mobiles only, and only when the status changes. First registration does not send an SMS.
+   */
+  trackingSms?: boolean | null;
+  /**
+   * Statuses and locations come from Excel as written. Add an English text here to show it on the English site.
+   */
+  statusTranslations?:
+    | {
+        fa: string;
+        en: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1414,6 +1465,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   footerAbout?: T;
   notifyPhone?: T;
   notifyEmail?: T;
+  trackingSms?: T;
+  statusTranslations?:
+    | T
+    | {
+        fa?: T;
+        en?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
