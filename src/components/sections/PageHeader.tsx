@@ -11,7 +11,7 @@ export async function PageHeader({ eyebrow, title, intro, crumbs = [] }: Props) 
   const t = await getTranslations('nav')
   const trail: Crumb[] = [{ href: '/', label: t('home') }, ...crumbs]
   return (
-    <section className="grain relative overflow-hidden bg-navy text-foam">
+    <section className="aurora grain relative overflow-hidden text-foam">
       <div className="pointer-events-none absolute -top-40 start-1/3 h-[480px] w-[480px] rounded-full bg-sky/15 blur-[120px]" aria-hidden />
       <div className="chart-grid absolute inset-0" aria-hidden />
       <Container className="relative pb-16 pt-36 lg:pb-24 lg:pt-44">

@@ -6,7 +6,7 @@ import type { CTABlock } from '@/payload-types'
 // فراخوان پایانی: نوار تیره‌ی تمام‌عرض با تیتر بسیار درشت و نور نارنجی ملایم
 export function CTASection({ heading, text, link }: CTABlock) {
   return (
-    <section className="grain relative isolate overflow-hidden bg-navy py-28 text-foam lg:py-40">
+    <section className="aurora grain relative isolate overflow-hidden py-28 text-foam lg:py-40">
       <div className="pointer-events-none absolute -bottom-40 start-1/2 -z-10 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px] rtl:translate-x-1/2" aria-hidden />
       <div className="chart-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
       <Container>

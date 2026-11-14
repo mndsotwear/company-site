@@ -14,7 +14,7 @@ type Props = {
 const TONES = {
   default: 'bg-bg text-text',
   surface: 'bg-surface text-text',
-  navy: 'grain bg-navy text-foam',
+  navy: 'aurora grain text-foam',
 }
 
 /** یک بخش کامل صفحه با فاصله‌ی بالا و پایین یکسان */

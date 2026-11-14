@@ -22,7 +22,7 @@ export async function VesselCard({ vessel: v, locale }: { vessel: Vessel; locale
   return (
     <Link
       href={`/fleet/${v.slug}`}
-      className={`group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface transition duration-500 ease-[var(--ease-luxe)] hover:-translate-y-1 hover:border-text/25 hover:shadow-2xl ${
+      className={`ring-grad group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface transition duration-500 ease-[var(--ease-luxe)] hover:-translate-y-1 hover:border-text/25 hover:shadow-2xl ${
         v.status === 'sold' ? 'opacity-75' : ''
       }`}
     >
