@@ -3,10 +3,10 @@
 import { ThemeProvider as NextThemes } from 'next-themes'
 import type { ReactNode } from 'react'
 
-// طراحی اصلی سایت تیره است؛ بازدیدکننده می‌تواند روشن را انتخاب کند و انتخابش ذخیره می‌شود
-export function ThemeProvider({ children }: { children: ReactNode }) {
+// حالت روشن/تیره: پیش‌فرض را ادمین در «تنظیمات سایت ← ظاهر سایت» تعیین می‌کند؛ انتخاب بازدیدکننده ذخیره می‌شود
+export function ThemeProvider({ children, defaultMode = 'dark' }: { children: ReactNode; defaultMode?: 'dark' | 'light' }) {
   return (
-    <NextThemes attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+    <NextThemes attribute="class" defaultTheme={defaultMode} enableSystem={false} disableTransitionOnChange>
       {children}
     </NextThemes>
   )

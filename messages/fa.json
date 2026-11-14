@@ -17,7 +17,9 @@
   },
   "theme": {
     "toLight": "تم روشن",
-    "toDark": "تم تیره"
+    "toDark": "تم تیره",
+    "palette": "رنگ سایت",
+    "custom": "رنگ دلخواه"
   },
   "locale": {
     "switch": "English",

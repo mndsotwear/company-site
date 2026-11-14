@@ -10,6 +10,8 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { FloatingQuote } from '@/components/layout/FloatingQuote'
 import { SmoothScroll } from '@/components/motion/SmoothScroll'
+import { getSiteSettings, type Locale } from '@/lib/payload'
+import { PALETTE_IDS, paletteBootScript } from '@/lib/palette'
 import '@/styles/globals.css'
 
 // همه‌ی صفحه‌ها هنگام درخواست از دیتابیس ساخته می‌شوند (تغییرات پنل فوراً دیده می‌شود و ساخت Docker به دیتابیس نیاز ندارد)
@@ -36,9 +38,22 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  const settings = await getSiteSettings(locale as Locale)
+  const palette = PALETTE_IDS.includes(settings.defaultPalette as never) ? settings.defaultPalette! : 'ocean'
+  const mode = settings.defaultMode === 'light' ? 'light' : 'dark'
 
   return (
-    <html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={isRtl(locale) ? 'rtl' : 'ltr'}
+      data-palette={palette}
+      data-custom={settings.customColor || undefined}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* اعمال تم رنگی انتخابی بازدیدکننده قبل از نمایش صفحه (بدون چشمک زدن) */}
+        <script dangerouslySetInnerHTML={{ __html: paletteBootScript }} />
+      </head>
       <body className="min-h-screen font-sans antialiased">
         {/* اطلاعات ساختاریافته‌ی شرکت برای گوگل (Organization) */}
         <script
@@ -56,7 +71,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           }}
         />
         <NextIntlClientProvider>
-          <ThemeProvider>
+          <ThemeProvider defaultMode={mode}>
             <SmoothScroll />
             <Header />
             <main>{children}</main>

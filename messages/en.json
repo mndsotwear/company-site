@@ -17,7 +17,9 @@
   },
   "theme": {
     "toLight": "Light theme",
-    "toDark": "Dark theme"
+    "toDark": "Dark theme",
+    "palette": "Site colour",
+    "custom": "Custom colour"
   },
   "locale": {
     "switch": "فارسی",

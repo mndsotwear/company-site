@@ -6,35 +6,137 @@
 /* حالت تیره با کلاس .dark روی <html> فعال می‌شود (توسط next-themes) */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ========== طراحی «لوکس تیره» ==========
-   تم اصلی سایت تیره است (سرمه‌ای نزدیک به مشکی، عکس‌های تمام‌عرض، تیترهای درشت، تأکید نارنجی کم و دقیق).
-   تم روشن نسخه‌ی کاغذی همان طراحی است (زمینه‌ی شیری گرم به‌جای سفید خالص). */
+/* ========== طراحی «آینده‌نگر» با تم‌های رنگی ==========
+   رنگ‌ها با دو ویژگی روی <html> انتخاب می‌شوند:
+   - data-palette: ocean (پیش‌فرض) | midnight | classic | coral | custom
+   - کلاس .dark (حالت تیره) که next-themes می‌گذارد
+   «custom» از روی یک رنگ دلخواه در lib/palette.ts ساخته می‌شود و متغیرهایش روی <html> نوشته می‌شود.
+   --deep زمینه‌ی بخش‌های همیشه‌تیره است (هیرو، فوتر، بخش‌های سرمه‌ای) */
 
-/* ---- تم روشن ---- */
-:root {
-  --bg: #f4f1ea;
-  --surface: #fbfaf7;
-  --surface-2: #ece7dc;
-  --text: #0a1622;
-  --muted: #5b6876;
-  --primary: #0a78ae;
-  --accent: #dd6f0c;
-  --border: #ddd6c8;
-  --hairline: rgb(10 22 34 / 0.1);
+:root,
+[data-palette='ocean'] {
+  --bg: #f3f7fc;
+  --surface: #ffffff;
+  --surface-2: #e8eff8;
+  --text: #0a1226;
+  --muted: #55617a;
+  --primary: #0891b2;
+  --accent: #6366f1;
+  --border: #d6dfec;
+  --deep: #050a18;
   color-scheme: light;
 }
-
-/* ---- تم تیره (پیش‌فرض) ---- */
-.dark {
-  --bg: #050d17;
-  --surface: #0a1622;
-  --surface-2: #0f1f2e;
-  --text: #f1f4f7;
-  --muted: #8d9eb0;
-  --primary: #4fb8ec;
-  --accent: #f28a1d;
-  --border: #1a2a3a;
-  --hairline: rgb(255 255 255 / 0.08);
+.dark,
+.dark[data-palette='ocean'],
+[data-palette='ocean'].dark {
+  --bg: #050a18;
+  --surface: #0b1326;
+  --surface-2: #111b33;
+  --text: #e8eefb;
+  --muted: #8a97b5;
+  --primary: #22d3ee;
+  --accent: #818cf8;
+  --border: #1c2742;
+  --deep: #030712;
+  color-scheme: dark;
+}
+[data-palette='midnight'] {
+  --bg: #f6f5f0;
+  --surface: #ffffff;
+  --surface-2: #ece9df;
+  --text: #0d1430;
+  --muted: #5a5f72;
+  --primary: #1e3a8a;
+  --accent: #b7862c;
+  --border: #dedad0;
+  --deep: #070b1a;
+  color-scheme: light;
+}
+.dark[data-palette='midnight'],
+[data-palette='midnight'].dark {
+  --bg: #060a19;
+  --surface: #0d1430;
+  --surface-2: #141d40;
+  --text: #f1efe8;
+  --muted: #9aa0b8;
+  --primary: #7b9cff;
+  --accent: #f5c26b;
+  --border: #1f2a52;
+  --deep: #04060f;
+  color-scheme: dark;
+}
+[data-palette='classic'] {
+  --bg: #f4f8fb;
+  --surface: #ffffff;
+  --surface-2: #e8f1f8;
+  --text: #071b30;
+  --muted: #4a5b6e;
+  --primary: #0787c2;
+  --accent: #dd6f0c;
+  --border: #d5e2ec;
+  --deep: #071b30;
+  color-scheme: light;
+}
+.dark[data-palette='classic'],
+[data-palette='classic'].dark {
+  --bg: #06172a;
+  --surface: #0b2239;
+  --surface-2: #102c48;
+  --text: #eaf6ff;
+  --muted: #9fb4c8;
+  --primary: #079fe5;
+  --accent: #f57c00;
+  --border: #173a5a;
+  --deep: #041120;
+  color-scheme: dark;
+}
+[data-palette='coral'] {
+  --bg: #fbf5f4;
+  --surface: #ffffff;
+  --surface-2: #f6e9e7;
+  --text: #24090f;
+  --muted: #6e585c;
+  --primary: #e11d48;
+  --accent: #d97706;
+  --border: #ecdcd9;
+  --deep: #14060a;
+  color-scheme: light;
+}
+.dark[data-palette='coral'],
+[data-palette='coral'].dark {
+  --bg: #0f0609;
+  --surface: #1a0c11;
+  --surface-2: #241218;
+  --text: #fdeef0;
+  --muted: #b5979c;
+  --primary: #fb7185;
+  --accent: #fbbf24;
+  --border: #33171f;
+  --deep: #0a0306;
+  color-scheme: dark;
+}
+[data-palette='custom'] {
+  --bg: var(--cl-bg);
+  --surface: var(--cl-surface);
+  --surface-2: var(--cl-surface-2);
+  --text: var(--cl-text);
+  --muted: var(--cl-muted);
+  --primary: var(--cl-primary);
+  --accent: var(--cl-accent);
+  --border: var(--cl-border);
+  --deep: var(--cl-deep);
+  color-scheme: light;
+}
+[data-palette='custom'].dark {
+  --bg: var(--cd-bg);
+  --surface: var(--cd-surface);
+  --surface-2: var(--cd-surface-2);
+  --text: var(--cd-text);
+  --muted: var(--cd-muted);
+  --primary: var(--cd-primary);
+  --accent: var(--cd-accent);
+  --border: var(--cd-border);
+  --deep: var(--cd-deep);
   color-scheme: dark;
 }
 
@@ -48,20 +150,73 @@
   --color-primary: var(--primary);
   --color-accent: var(--accent);
   --color-border: var(--border);
-  --color-hairline: var(--hairline);
+  --color-hairline: color-mix(in oklab, var(--text) 10%, transparent);
 
-  /* رنگ‌های ثابت (روی عکس و ویدیو، در هر دو تم یکسان) */
-  --color-navy: #050d17;
-  --color-navy-deep: #0a1a2b;
-  --color-ink: #1d1d1d;
-  --color-sky: #4fb8ec;
-  --color-foam: #f1f4f7;
+  /* بخش‌های همیشه‌تیره (هیرو، فوتر، ...) هم با تم رنگ عوض می‌کنند */
+  --color-navy: var(--deep);
+  --color-navy-deep: var(--deep);
+  --color-ink: var(--deep);
+  --color-sky: var(--primary);
+  --color-foam: #f2f5fb;
 
   --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
-  /* تیترهای لاتین و اعداد درشت: سریف کلاسیک؛ حروف فارسی خودکار وزیرمتن می‌شوند */
   --font-display: 'Fraunces Variable', 'Vazirmatn', ui-serif, Georgia, serif;
 
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- جلوه‌های آینده‌نگر ---- */
+/* پنل شیشه‌ای */
+.glass {
+  background: color-mix(in oklab, var(--surface) 55%, transparent);
+  border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.glass-dark {
+  background: color-mix(in oklab, #ffffff 5%, transparent);
+  border: 1px solid color-mix(in oklab, #ffffff 12%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+/* متن گرادیانی (رنگ اصلی ← تأکید) */
+.text-grad {
+  background: linear-gradient(100deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* هاله‌ی نور رنگ تم */
+.glow {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
+    0 10px 50px -12px color-mix(in oklab, var(--primary) 60%, transparent);
+}
+/* زمینه‌ی شفق: دو لکه‌ی نور محو در رنگ‌های تم */
+.aurora {
+  background:
+    radial-gradient(60% 50% at 20% 10%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 70%),
+    radial-gradient(50% 45% at 85% 30%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 70%),
+    var(--deep);
+}
+/* حاشیه‌ی گرادیانی متحرک برای کارت‌ها هنگام هاور */
+.ring-grad {
+  position: relative;
+}
+.ring-grad::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(130deg, var(--primary), transparent 40%, transparent 60%, var(--accent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-luxe);
+  pointer-events: none;
+}
+.ring-grad:hover::before {
+  opacity: 1;
 }
 
 html {

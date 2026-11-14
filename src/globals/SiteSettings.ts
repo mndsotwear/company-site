@@ -142,6 +142,51 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: { fa: 'ظاهر سایت', en: 'Appearance' },
+          description: {
+            fa: 'تم پیش‌فرض برای بازدیدکننده‌ای که هنوز خودش تمی انتخاب نکرده. بازدیدکننده می‌تواند از دکمه‌ی رنگ در هدر تم را عوض کند.',
+            en: 'Default theme for visitors who have not picked one. Visitors can change it with the colour button in the header.',
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'defaultPalette',
+                  type: 'select',
+                  defaultValue: 'ocean',
+                  label: { fa: 'پالت رنگ پیش‌فرض', en: 'Default palette' },
+                  options: [
+                    { value: 'ocean', label: { fa: 'اقیانوس عمیق', en: 'Deep ocean' } },
+                    { value: 'midnight', label: { fa: 'نیمه‌شب و طلا', en: 'Midnight & gold' } },
+                    { value: 'classic', label: { fa: 'شاهین کلاسیک', en: 'Shahin classic' } },
+                    { value: 'coral', label: { fa: 'غروب مرجانی', en: 'Coral sunset' } },
+                    { value: 'custom', label: { fa: 'رنگ دلخواه', en: 'Custom colour' } },
+                  ],
+                },
+                {
+                  name: 'customColor',
+                  type: 'text',
+                  defaultValue: '#22d3ee',
+                  label: { fa: 'رنگ دلخواه (کد هگز مثل #22d3ee)', en: 'Custom colour (hex)' },
+                  validate: (v: unknown) => (!v || /^#[0-9a-fA-F]{6}$/.test(String(v)) ? true : 'مثلاً #22d3ee'),
+                  admin: { condition: (data) => data?.defaultPalette === 'custom' },
+                },
+                {
+                  name: 'defaultMode',
+                  type: 'select',
+                  defaultValue: 'dark',
+                  label: { fa: 'حالت پیش‌فرض', en: 'Default mode' },
+                  options: [
+                    { value: 'dark', label: { fa: 'تیره', en: 'Dark' } },
+                    { value: 'light', label: { fa: 'روشن', en: 'Light' } },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: { fa: 'رهگیری', en: 'Tracking' },
           fields: [
             {

@@ -1417,6 +1417,9 @@ export interface SiteSetting {
   footerAbout?: string | null;
   notifyPhone?: string | null;
   notifyEmail?: string | null;
+  defaultPalette?: ('ocean' | 'midnight' | 'classic' | 'coral' | 'custom') | null;
+  customColor?: string | null;
+  defaultMode?: ('dark' | 'light') | null;
   /**
    * Iranian mobiles only, and only when the status changes. First registration does not send an SMS.
    */
@@ -1470,6 +1473,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   footerAbout?: T;
   notifyPhone?: T;
   notifyEmail?: T;
+  defaultPalette?: T;
+  customColor?: T;
+  defaultMode?: T;
   trackingSms?: T;
   statusTranslations?:
     | T
