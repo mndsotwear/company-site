@@ -1,11 +1,15 @@
 'use client'
 
 import { useEffect, useState, type ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 
 // پوسته‌ی هدر: بالای صفحه شفاف روی عکس/ویدیو، بعد از اسکرول پس‌زمینه‌ی مات می‌گیرد؛
 // هنگام اسکرول به پایین کنار می‌رود و با اسکرول به بالا برمی‌گردد.
 export function HeaderShell({ children }: { children: ReactNode }) {
   const [solid, setSolid] = useState(false)
+  // صفحه‌ی اصلی هیروی تمام‌صفحه‌ی تصویری دارد: بالای آن هدر شفاف با متن سفید
+  const path = usePathname()
+  const overHero = /^\/(fa|en)\/?$/.test(path || '') && !solid
   const [hidden, setHidden] = useState(false)
   useEffect(() => {
     let last = window.scrollY
@@ -23,8 +27,9 @@ export function HeaderShell({ children }: { children: ReactNode }) {
   return (
     <header
       data-solid={solid}
+      data-over-hero={overHero}
       className={`group fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,color,transform] duration-500 ease-[var(--ease-luxe)] ${
-        solid ? 'border-b border-hairline bg-bg/80 text-text backdrop-blur-xl' : 'border-b border-transparent text-foam'
+        solid ? 'border-b border-border bg-bg/90 text-text backdrop-blur-md' : overHero ? 'border-b border-transparent bg-transparent text-white' : 'border-b border-transparent bg-transparent text-text'
       } ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       {children}

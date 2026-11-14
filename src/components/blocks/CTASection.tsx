@@ -3,27 +3,29 @@ import { Container } from '@/components/ui/Container'
 import { RevealWords, Reveal } from '@/components/motion/Reveal'
 import type { CTABlock } from '@/payload-types'
 
-// فراخوان پایانی: نوار تیره‌ی تمام‌عرض با تیتر بسیار درشت و نور نارنجی ملایم
+// فراخوان پایانی: یک کارت بزرگ با رنگ اصلی تم (رنگ تخت، بدون گرادیان) و تیتر درشت
 export function CTASection({ heading, text, link }: CTABlock) {
   return (
-    <section className="aurora grain relative isolate overflow-hidden py-28 text-foam lg:py-40">
-      <div className="pointer-events-none absolute -bottom-40 start-1/2 -z-10 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px] rtl:translate-x-1/2" aria-hidden />
-      <div className="chart-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
+    <section className="bg-bg py-20 lg:py-28">
       <Container>
-        <div className="max-w-4xl">
-          {heading && <RevealWords text={heading} className="text-4xl font-black leading-[1.25] sm:text-6xl lg:text-7xl" />}
-          {text && (
-            <Reveal delay={0.25}>
-              <p className="mt-8 max-w-xl text-lg leading-8 text-foam/65">{text}</p>
-            </Reveal>
-          )}
-          {link?.label && (
-            <Reveal delay={0.4}>
-              <Button href={link.href || '/contact'} variant="accent" size="lg" className="mt-12">
-                {link.label}
-              </Button>
-            </Reveal>
-          )}
+        <div className="rounded-[2.5rem] bg-primary px-8 py-16 text-white sm:px-14 lg:px-20 lg:py-24">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              {heading && <RevealWords text={heading} className="text-4xl font-black leading-[1.25] sm:text-5xl lg:text-6xl" />}
+              {text && (
+                <Reveal delay={0.2}>
+                  <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">{text}</p>
+                </Reveal>
+              )}
+            </div>
+            {link?.label && (
+              <Reveal delay={0.35} className="lg:col-span-4 lg:justify-self-end">
+                <Button href={link.href || '/contact'} variant="sky" size="lg">
+                  {link.label}
+                </Button>
+              </Reveal>
+            )}
+          </div>
         </div>
       </Container>
     </section>

@@ -105,7 +105,7 @@ export default async function VesselPage({ params }: Props) {
                 <CmsImage media={cover} size="hero" fill priority sizes="(min-width:1024px) 66vw, 100vw" />
               </a>
             ) : (
-              <div className="chart-grid grid h-full place-items-center text-foam/30">
+              <div className="grid h-full place-items-center text-foam/30">
                 <MaritimeIcon name="ship" className="h-20 w-20" />
               </div>
             )}

@@ -165,58 +165,11 @@
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ---- جلوه‌های آینده‌نگر ---- */
-/* پنل شیشه‌ای */
+/* ---- پنل شیشه‌ای (فقط برای منوهای شناور روی محتوا) ---- */
 .glass {
-  background: color-mix(in oklab, var(--surface) 55%, transparent);
-  border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
-  backdrop-filter: blur(18px) saturate(140%);
-}
-.glass-dark {
-  background: color-mix(in oklab, #ffffff 5%, transparent);
-  border: 1px solid color-mix(in oklab, #ffffff 12%, transparent);
-  backdrop-filter: blur(18px) saturate(140%);
-}
-/* متن گرادیانی (رنگ اصلی ← تأکید) */
-.text-grad {
-  background: linear-gradient(100deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-/* هاله‌ی نور رنگ تم */
-.glow {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
-    0 10px 50px -12px color-mix(in oklab, var(--primary) 60%, transparent);
-}
-/* زمینه‌ی شفق: دو لکه‌ی نور محو در رنگ‌های تم */
-.aurora {
-  background:
-    radial-gradient(60% 50% at 20% 10%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 70%),
-    radial-gradient(50% 45% at 85% 30%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 70%),
-    var(--deep);
-}
-/* حاشیه‌ی گرادیانی متحرک برای کارت‌ها هنگام هاور */
-.ring-grad {
-  position: relative;
-}
-.ring-grad::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(130deg, var(--primary), transparent 40%, transparent 60%, var(--accent));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-luxe);
-  pointer-events: none;
-}
-.ring-grad:hover::before {
-  opacity: 1;
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
 }
 
 html {
@@ -243,24 +196,7 @@ body {
   unicode-bidi: isolate;
 }
 
-/* خطوط کم‌رنگ نقشه‌ی دریایی (عرض و طول جغرافیایی) */
-.chart-grid {
-  background-image:
-    linear-gradient(to right, rgb(241 244 247 / 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(241 244 247 / 0.045) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-}
 
-/* دانه‌ی ریز فیلم روی عکس‌ها و بخش‌های تیره (حس عکاسی، نه دیجیتال تخت) */
-.grain::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
 /* زیرخط متحرک لینک‌ها */
 .link-line {
@@ -292,6 +228,22 @@ body {
 }
 .kenburns {
   animation: kenburns 24s var(--ease-luxe) infinite alternate;
+}
+
+/* ورود عناصر هیرو با CSS (بدون انتظار برای جاوااسکریپت، تا متن اصلی فوراً دیده شود) */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.9s var(--ease-luxe) both;
+  animation-delay: var(--d, 0s);
 }
 
 /* نشانگر اسکرول هیرو */
@@ -326,6 +278,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .ticker-track,
   .kenburns,
+  .rise,
   .scroll-cue {
     animation: none;
   }

@@ -68,7 +68,6 @@ export default async function ContactPage({ params }: Props) {
         {/* دفتر و نقشه */}
         <div className="lg:col-span-5">
           <div className="relative overflow-hidden rounded-2xl bg-navy p-8 text-foam">
-            <div className="chart-grid absolute inset-0" aria-hidden />
             <div className="relative">
               <p className="text-sm text-sky">{t('contact.office')}</p>
               <p className="mt-3 text-2xl font-bold leading-10">{address}</p>

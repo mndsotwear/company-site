@@ -6,8 +6,7 @@ import { Container } from '@/components/ui/Container'
 export default async function NotFound() {
   const t = await getTranslations()
   return (
-    <section className="grain relative overflow-hidden bg-navy text-foam">
-      <div className="chart-grid absolute inset-0" aria-hidden />
+    <section className="relative overflow-hidden bg-navy text-foam">
       <Container className="relative grid min-h-[90vh] items-center gap-12 pb-20 pt-36 lg:grid-cols-2">
         <div>
           <p className="text-sm tracking-widest text-sky">{t('notFound.code')}</p>

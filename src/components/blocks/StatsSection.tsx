@@ -18,7 +18,7 @@ export async function StatsSection({ heading, items }: StatsBlock) {
       <dl className="grid grid-cols-2 gap-y-14 lg:grid-cols-4">
         {items.map((s, i) => (
           <Reveal key={s.id} delay={i * 0.1} className="border-s border-border ps-6 lg:ps-8">
-            <dd className="display text-grad text-5xl font-light tracking-tight sm:text-7xl">
+            <dd className="display text-primary text-5xl font-light tracking-tight sm:text-7xl">
               <CountUp value={s.value} locale={locale} />
               {s.suffix && <span className="text-accent">{s.suffix}</span>}
             </dd>

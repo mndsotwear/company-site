@@ -35,7 +35,7 @@ export async function Footer() {
   const wa = whatsappLink(s.whatsapp || phone)
 
   return (
-    <footer className="grain relative overflow-hidden bg-navy text-foam">
+    <footer className="relative overflow-hidden bg-navy text-foam">
       <div className="border-t border-white/10">
         <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 px-5 pb-10 pt-20 md:grid-cols-12">
           <div className="md:col-span-5">

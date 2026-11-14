@@ -58,7 +58,7 @@ export async function Header() {
           <ThemeToggle labels={{ toLight: t('theme.toLight'), toDark: t('theme.toDark') }} />
           <Link
             href="/quote"
-            className="group/q glow hidden items-center gap-2 whitespace-nowrap rounded-full bg-[linear-gradient(100deg,var(--primary),var(--accent))] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 lg:inline-flex"
+            className="group/q hidden items-center gap-2 whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 lg:inline-flex"
           >
             {quote.label}
             <span aria-hidden className="transition-transform duration-500 rtl:rotate-180 rtl:group-hover/q:-translate-x-1 ltr:group-hover/q:translate-x-1">→</span>

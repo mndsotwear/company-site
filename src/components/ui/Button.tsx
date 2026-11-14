@@ -8,7 +8,7 @@ const VARIANTS: Record<Variant, string> = {
   primary: 'bg-text text-bg hover:bg-accent hover:text-white',
   /** روشن روی زمینه‌ی تیره */
   sky: 'bg-foam text-navy hover:bg-accent hover:text-white',
-  accent: 'glow bg-[linear-gradient(100deg,var(--primary),var(--accent))] text-white hover:brightness-110',
+  accent: 'bg-primary text-white hover:bg-accent',
   outline: 'border border-border text-text hover:border-text',
   outlineLight: 'border border-white/25 bg-white/[0.04] text-foam backdrop-blur hover:border-white/60 hover:bg-white/10',
   ghost: 'text-text link-line pb-1',

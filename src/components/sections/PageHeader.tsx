@@ -11,17 +11,15 @@ export async function PageHeader({ eyebrow, title, intro, crumbs = [] }: Props) 
   const t = await getTranslations('nav')
   const trail: Crumb[] = [{ href: '/', label: t('home') }, ...crumbs]
   return (
-    <section className="aurora grain relative overflow-hidden text-foam">
-      <div className="pointer-events-none absolute -top-40 start-1/3 h-[480px] w-[480px] rounded-full bg-sky/15 blur-[120px]" aria-hidden />
-      <div className="chart-grid absolute inset-0" aria-hidden />
+    <section className="relative border-b border-border bg-bg text-text">
       <Container className="relative pb-16 pt-36 lg:pb-24 lg:pt-44">
-        <nav aria-label="breadcrumb" className="mb-10 text-xs text-foam/50">
+        <nav aria-label="breadcrumb" className="mb-10 text-xs text-muted">
           <ol className="flex flex-wrap items-center gap-2">
             {trail.map((c, i) => (
               <li key={i} className="flex items-center gap-2">
                 {i > 0 && <span aria-hidden>/</span>}
                 {c.href && i < trail.length - 1 ? (
-                  <Link href={c.href} className="hover:text-sky">
+                  <Link href={c.href} className="hover:text-primary">
                     {c.label}
                   </Link>
                 ) : (
@@ -35,8 +33,8 @@ export async function PageHeader({ eyebrow, title, intro, crumbs = [] }: Props) 
           <div className="lg:col-span-7">
             {eyebrow && (
               <Reveal>
-                <p className="mb-6 inline-flex items-center gap-4 text-xs tracking-[0.2em] text-foam/60">
-                  <span className="h-px w-10 bg-accent" aria-hidden />
+                <p className="mb-6 inline-flex items-center gap-4 text-xs tracking-[0.2em] text-muted">
+                  <span className="h-px w-10 bg-primary" aria-hidden />
                   {eyebrow}
                 </p>
               </Reveal>
@@ -45,7 +43,7 @@ export async function PageHeader({ eyebrow, title, intro, crumbs = [] }: Props) 
           </div>
           {intro && (
             <Reveal delay={0.25} className="lg:col-span-5">
-              <p className="text-base leading-8 text-foam/65">{intro}</p>
+              <p className="text-base leading-8 text-muted">{intro}</p>
             </Reveal>
           )}
         </div>

@@ -7,8 +7,8 @@ export function Logo({ light, dark, name, tagline }: Props) {
     return (
       <>
         {/* روی عکس (هدر شفاف) و در تم تیره نسخه‌ی روشن لوگو، در تم روشن بعد از اسکرول نسخه‌ی تیره */}
-        <img src={(light || dark)!} alt={name} className="hidden h-10 w-auto group-data-[solid=true]:block dark:!hidden" />
-        <img src={(dark || light)!} alt={name} className="block h-10 w-auto group-data-[solid=true]:hidden dark:!block" />
+        <img src={(light || dark)!} alt={name} className="h-10 w-auto group-data-[over-hero=true]:hidden dark:hidden" />
+        <img src={(dark || light)!} alt={name} className="hidden h-10 w-auto group-data-[over-hero=true]:block dark:block" />
       </>
     )
   }
