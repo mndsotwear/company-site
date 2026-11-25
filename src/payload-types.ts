@@ -73,6 +73,9 @@ export interface Config {
     'vessel-inquiries': VesselInquiry;
     'quote-requests': QuoteRequest;
     'contact-messages': ContactMessage;
+    subscribers: Subscriber;
+    sailings: Sailing;
+    offices: Office;
     shipments: Shipment;
     'shipment-imports': ShipmentImport;
     media: Media;
@@ -90,6 +93,9 @@ export interface Config {
     'vessel-inquiries': VesselInquiriesSelect<false> | VesselInquiriesSelect<true>;
     'quote-requests': QuoteRequestsSelect<false> | QuoteRequestsSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    sailings: SailingsSelect<false> | SailingsSelect<true>;
+    offices: OfficesSelect<false> | OfficesSelect<true>;
     shipments: ShipmentsSelect<false> | ShipmentsSelect<true>;
     'shipment-imports': ShipmentImportsSelect<false> | ShipmentImportsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -640,6 +646,55 @@ export interface ContactMessage {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  locale?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Enter upcoming departures. Past sailings are hidden on the site automatically.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sailings".
+ */
+export interface Sailing {
+  id: number;
+  vesselName: string;
+  voyage?: string | null;
+  origin: 'abadan' | 'khorramshahr';
+  destination: 'umm-qasr' | 'basra' | 'kuwait' | 'dubai';
+  departure: string;
+  arrival?: string | null;
+  cutoff?: string | null;
+  status: 'scheduled' | 'loading' | 'full' | 'departed' | 'cancelled';
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offices".
+ */
+export interface Office {
+  id: number;
+  name: string;
+  city: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  hours?: string | null;
+  mapUrl?: string | null;
+  isMain?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Each change of status or location adds a history entry that the customer can see.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -785,6 +840,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-messages';
         value: number | ContactMessage;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'sailings';
+        value: number | Sailing;
+      } | null)
+    | ({
+        relationTo: 'offices';
+        value: number | Office;
       } | null)
     | ({
         relationTo: 'shipments';
@@ -1200,6 +1267,50 @@ export interface ContactMessagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sailings_select".
+ */
+export interface SailingsSelect<T extends boolean = true> {
+  vesselName?: T;
+  voyage?: T;
+  origin?: T;
+  destination?: T;
+  departure?: T;
+  arrival?: T;
+  cutoff?: T;
+  status?: T;
+  note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offices_select".
+ */
+export interface OfficesSelect<T extends boolean = true> {
+  name?: T;
+  city?: T;
+  address?: T;
+  phone?: T;
+  email?: T;
+  hours?: T;
+  mapUrl?: T;
+  isMain?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "shipments_select".
  */
 export interface ShipmentsSelect<T extends boolean = true> {
@@ -1417,6 +1528,11 @@ export interface SiteSetting {
   footerAbout?: string | null;
   notifyPhone?: string | null;
   notifyEmail?: string | null;
+  /**
+   * New quotes, contact messages and vessel inquiries are also sent to this chat. Bot token lives in .env (TELEGRAM_BOT_TOKEN). Empty = off.
+   */
+  telegramChatId?: string | null;
+  quoteStatusNotify?: boolean | null;
   defaultPalette?: ('ocean' | 'midnight' | 'classic' | 'coral' | 'custom') | null;
   customColor?: string | null;
   defaultMode?: ('dark' | 'light') | null;
@@ -1473,6 +1589,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   footerAbout?: T;
   notifyPhone?: T;
   notifyEmail?: T;
+  telegramChatId?: T;
+  quoteStatusNotify?: T;
   defaultPalette?: T;
   customColor?: T;
   defaultMode?: T;

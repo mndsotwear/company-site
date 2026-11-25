@@ -4,5 +4,6 @@ export const GROUPS = {
   vessels: { fa: 'فروش کشتی', en: 'Vessel sales' },
   requests: { fa: 'درخواست‌ها', en: 'Requests' },
   tracking: { fa: 'رهگیری خودرو', en: 'Tracking' },
+  operations: { fa: 'برنامه حرکت و دفاتر', en: 'Schedule & offices' },
   system: { fa: 'سیستم', en: 'System' },
 }

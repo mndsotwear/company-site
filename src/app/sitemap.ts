@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     alternates: { languages: { fa: `${SITE}/fa${path}`, ...(en ? { en: `${SITE}/en${path}` } : {}) } },
   })
 
-  const statics = ['', '/services', '/fleet', '/tracking', '/quote', '/contact'].map((p) => entry(p))
+  const statics = ['', '/services', '/fleet', '/schedule', '/tracking', '/quote', '/contact'].map((p) => entry(p))
   const [pages, services, vessels] = await Promise.all([
     payload.find({ collection: 'pages', limit: 200, depth: 0, select: { slug: true, updatedAt: true, showInEnglish: true, seo: true } }),
     payload.find({ collection: 'services', where: { isActive: { equals: true } }, limit: 200, depth: 0, select: { slug: true, updatedAt: true } }),

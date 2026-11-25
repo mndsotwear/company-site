@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import { NewsletterForm } from './NewsletterForm'
 import { getSiteSettings, whatsappLink, type Locale } from '@/lib/payload'
 
 const DEFAULT_LINKS = [
@@ -8,6 +9,7 @@ const DEFAULT_LINKS = [
   { href: '/tracking', key: 'tracking' },
   { href: '/quote', key: 'quote' },
   { href: '/fleet', key: 'fleet' },
+  { href: '/schedule', key: 'schedule' },
   { href: '/contact', key: 'contact' },
 ] as const
 
@@ -38,7 +40,7 @@ export async function Footer() {
     <footer className="relative overflow-hidden bg-navy text-foam">
       <div className="border-t border-white/10">
         <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 px-5 pb-10 pt-20 md:grid-cols-12">
-          <div className="md:col-span-5">
+          <div className="md:col-span-4">
             <p className="text-2xl font-black">{t('meta.siteName')}</p>
             <p className="mt-3 max-w-xs text-sm leading-7 text-foam/70">{s.footerAbout || t('meta.description')}</p>
             {!!s.socials?.length && (
@@ -59,7 +61,7 @@ export async function Footer() {
             )}
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-3">
             <p className="mb-5 text-xs tracking-[0.2em] text-foam/45">{t('footer.contactTitle')}</p>
             <ul className="space-y-3 text-sm text-foam/80">
               <li>
@@ -91,9 +93,9 @@ export async function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <p className="mb-5 text-xs tracking-[0.2em] text-foam/45">{t('footer.linksTitle')}</p>
-            <ul className="grid grid-cols-2 gap-3 text-sm text-foam/80">
+            <ul className="grid gap-3 text-sm text-foam/80">
               {links.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="hover:text-accent">
@@ -102,6 +104,9 @@ export async function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="md:col-span-3">
+            <NewsletterForm />
           </div>
         </div>
       </div>

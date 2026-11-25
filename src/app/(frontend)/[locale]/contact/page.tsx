@@ -4,6 +4,7 @@ import { PageHeader } from '@/components/sections/PageHeader'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { ContactForm } from '@/components/forms/ContactForm'
+import { getOffices } from '@/lib/operations'
 import { getSiteSettings, whatsappLink, type Locale } from '@/lib/payload'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -25,6 +26,7 @@ export default async function ContactPage({ params }: Props) {
   const email = s.email || 'shahin.marine1@gmail.com'
   const address = s.address || t('footer.address')
   const wa = whatsappLink(s.whatsapp || phone)
+  const offices = await getOffices(locale as Locale)
 
   const channels = [
     { label: t('contact.phone'), value: phone, href: `tel:${phone}`, ltr: true, hint: t('contact.phoneHint') },
@@ -58,6 +60,45 @@ export default async function ContactPage({ params }: Props) {
             </li>
           ))}
         </ul>
+          {!!offices.length && (
+            <div className="mt-14">
+              <h2 className="text-2xl font-extrabold">{t('offices.title')}</h2>
+              <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {offices.map((o) => (
+                  <li key={o.id} className="rounded-2xl border border-border bg-surface p-6">
+                    <p className="flex items-center gap-2 font-bold">
+                      {o.name}
+                      {o.isMain && <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">{t('offices.main')}</span>}
+                    </p>
+                    <p className="mt-1 text-sm text-muted">{o.city}</p>
+                    {o.address && <p className="mt-3 text-sm leading-7">{o.address}</p>}
+                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+                      {o.phone && (
+                        <a href={`tel:${o.phone}`} className="ltr-nums font-semibold text-primary hover:underline">
+                          {o.phone}
+                        </a>
+                      )}
+                      {o.email && (
+                        <a href={`mailto:${o.email}`} className="ltr-nums text-muted hover:text-text">
+                          {o.email}
+                        </a>
+                      )}
+                    </div>
+                    {o.hours && (
+                      <p className="mt-2 text-xs text-muted">
+                        {t('offices.hours')}: {o.hours}
+                      </p>
+                    )}
+                    {o.mapUrl && (
+                      <a href={o.mapUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-xs font-semibold hover:text-primary">
+                        {t('offices.map')}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="mt-14" id="message">
             <h2 className="text-2xl font-extrabold">{t('contactForm.title')}</h2>
             <p className="mt-2 mb-8 text-muted">{t('contactForm.intro')}</p>

@@ -13,7 +13,10 @@
     "contact": "Contact us",
     "quote": "Request a quote",
     "menu": "Menu",
-    "close": "Close"
+    "close": "Close",
+    "schedule": "Schedule",
+    "search": "Search",
+    "login": "Login"
   },
   "theme": {
     "toLight": "Light theme",
@@ -44,7 +47,8 @@
     "rights": "All rights reserved for Shahin Marine.",
     "credit": "Website by Pouyan Hub",
     "privacy": "Privacy",
-    "whatsapp": "Chat on WhatsApp"
+    "whatsapp": "Chat on WhatsApp",
+    "call": "Call us"
   },
   "ports": [
     "Abadan",
@@ -304,5 +308,66 @@
     "needTwo": "Select at least two vessels to compare.",
     "back": "Back to vessels for sale",
     "bestHint": "Orange values are the highest in their row."
+  },
+  "schedule": {
+    "eyebrow": "Sailing schedule",
+    "title": "Schedule",
+    "intro": "See upcoming departures from Abadan and Khorramshahr and search by route.",
+    "origin": "Origin",
+    "destination": "Destination",
+    "any": "All",
+    "search": "Search",
+    "departure": "Departure",
+    "eta": "ETA",
+    "cutoff": "Cargo cut-off",
+    "empty": "No sailings are listed for this route.",
+    "emptyHint": "Request a quote or call us for the next available departure."
+  },
+  "heroTools": {
+    "tabs": {
+      "track": "Tracking",
+      "schedule": "Schedule",
+      "offices": "Offices",
+      "quote": "Quote"
+    },
+    "trackLabel": "Last 6 chassis characters or quote number",
+    "trackHint": "e.g. 123456 or Q-1405-0001",
+    "trackButton": "Track",
+    "origin": "Origin",
+    "destination": "Destination",
+    "cargo": "Cargo",
+    "any": "All",
+    "choose": "Choose",
+    "scheduleButton": "Show schedule",
+    "quoteButton": "Continue",
+    "map": "Map",
+    "noOffices": "Office details are coming soon.",
+    "contactPage": "Contact us"
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "text": "Get shipping news and sailing updates by email.",
+    "placeholder": "Email address",
+    "button": "Subscribe",
+    "ok": "You are subscribed. Thank you!",
+    "invalid": "Email is not valid.",
+    "rate": "Please try again in a few minutes."
+  },
+  "search": {
+    "title": "Search",
+    "intro": "Search services, vessels and pages.",
+    "placeholder": "What are you looking for?",
+    "button": "Search",
+    "results": "{count, plural, =0 {No results} =1 {One result} other {{count, number} results}}",
+    "services": "Services",
+    "vessels": "Vessels",
+    "pages": "Pages",
+    "short": "Enter at least 2 characters."
+  },
+  "offices": {
+    "title": "Offices",
+    "main": "Head office",
+    "hours": "Opening hours",
+    "map": "View on map"
   }
 }

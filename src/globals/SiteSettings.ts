@@ -139,6 +139,24 @@ export const SiteSettings: GlobalConfig = {
                 },
               ],
             },
+            {
+              name: 'telegramChatId',
+              type: 'text',
+              label: { fa: 'شناسه‌ی چت تلگرام/بله برای اعلان فوری', en: 'Telegram/Bale chat ID for instant alerts' },
+              access: { update: adminOnlyField },
+              admin: {
+                description: {
+                  fa: 'استعلام، پیام تماس و درخواست خرید کشتی به این گروه یا کانال هم فرستاده می‌شود. توکن ربات در فایل .env (TELEGRAM_BOT_TOKEN) است. خالی = غیرفعال.',
+                  en: 'New quotes, contact messages and vessel inquiries are also sent to this chat. Bot token lives in .env (TELEGRAM_BOT_TOKEN). Empty = off.',
+                },
+              },
+            },
+            {
+              name: 'quoteStatusNotify',
+              type: 'checkbox',
+              defaultValue: true,
+              label: { fa: 'اطلاع به مشتری وقتی وضعیت استعلام عوض می‌شود (پیامک و ایمیل)', en: 'Notify customer when a quote status changes (SMS and email)' },
+            },
           ],
         },
         {

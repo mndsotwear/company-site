@@ -3,6 +3,7 @@ import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
 import { CONTACT_VIA_OPTIONS, labelOf, toPayloadOptions } from '../lib/options'
 import { emailTable, sendMail, sendSms } from '../lib/notify'
+import { sendTelegram } from '../lib/telegram'
 import { isIranMobile } from '../lib/validate'
 
 // درخواست‌های خرید کشتی که مشتری از صفحه‌ی هر کشتی می‌فرستد.
@@ -32,6 +33,12 @@ export const VesselInquiries: CollectionConfig = {
 
         // اجرای ناهمزمان تا پاسخ فرم منتظر پیامک و ایمیل نماند
         void Promise.all([
+          sendTelegram(req.payload, settings.telegramChatId, `درخواست خرید کشتی: ${vesselName}`, [
+            ['نام', doc.name],
+            ['شرکت', doc.company],
+            ['تلفن', doc.phone],
+            ['پیام', (doc.message ?? '').slice(0, 400)],
+          ]),
           sendSms(req.payload, settings.notifyPhone, `درخواست خرید کشتی: ${vesselName}\n${doc.name} ${doc.phone}`),
           isIranMobile(doc.phone)
             ? sendSms(

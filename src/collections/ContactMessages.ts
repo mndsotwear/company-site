@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
 import { emailTable, sendMail, sendSms } from '../lib/notify'
+import { sendTelegram } from '../lib/telegram'
 
 // پیام‌هایی که از فرم «تماس با ما» می‌رسد
 export const ContactMessages: CollectionConfig = {
@@ -25,6 +26,12 @@ export const ContactMessages: CollectionConfig = {
         if (operation !== 'create') return doc
         const settings = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
         void Promise.all([
+          sendTelegram(req.payload, settings.telegramChatId, 'پیام جدید از فرم تماس', [
+            ['نام', doc.name],
+            ['تلفن', doc.phone],
+            ['موضوع', doc.subject],
+            ['پیام', (doc.message ?? '').slice(0, 400)],
+          ]),
           sendSms(req.payload, settings.notifyPhone, `پیام جدید از سایت\n${doc.name} ${doc.phone ?? ''}\n${doc.subject ?? ''}`),
           sendMail(
             req.payload,

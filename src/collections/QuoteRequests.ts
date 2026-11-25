@@ -3,6 +3,7 @@ import { adminOnly, loggedIn } from '../access/roles'
 import { GROUPS } from '../lib/adminGroups'
 import { jalaliYear } from '../lib/jalali'
 import { emailTable, sendMail, sendSms } from '../lib/notify'
+import { sendTelegram } from '../lib/telegram'
 import { isIranMobile } from '../lib/validate'
 import {
   CARGO_OPTIONS,
@@ -66,7 +67,29 @@ export const QuoteRequests: CollectionConfig = {
     ],
     afterChange: [
       // اطلاع‌رسانی بعد از ثبت: پیامک و ایمیل به شرکت + پیامک تأیید به مشتری
-      async ({ doc, operation, req }) => {
+      async ({ doc, previousDoc, operation, req }) => {
+        const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shahinmarine.com').replace(/\/$/, '')
+        const trackUrl = `${site}/fa/tracking?code=${doc.trackingNumber}`
+
+        // تغییر وضعیت توسط ادمین ← اطلاع به مشتری (پیامک و ایمیل)
+        if (operation === 'update') {
+          if (!doc.status || doc.status === previousDoc?.status) return doc
+          const st = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
+          if (!st.quoteStatusNotify) return doc
+          const label = doc.status === 'in-review' ? 'در حال بررسی است' : doc.status === 'answered' ? 'پاسخ داده شد' : null
+          if (!label) return doc
+          const text = `شاهین مارین: استعلام ${doc.trackingNumber} شما ${label}.\nپیگیری: ${trackUrl}`
+          void Promise.all([
+            isIranMobile(doc.phone) ? sendSms(req.payload, doc.phone, text) : Promise.resolve(),
+            sendMail(
+              req.payload,
+              doc.email,
+              `وضعیت استعلام ${doc.trackingNumber}`,
+              emailTable(`استعلام ${doc.trackingNumber} ${label}`, [['پیگیری آنلاین', trackUrl]]),
+            ),
+          ])
+          return doc
+        }
         if (operation !== 'create') return doc
         const settings = await req.payload.findGlobal({ slug: 'site-settings', depth: 0, req })
         const pick = (v: string | null | undefined, other: string | null | undefined, opts: Option[]) =>
@@ -77,6 +100,33 @@ export const QuoteRequests: CollectionConfig = {
 
         // اجرای ناهمزمان تا پاسخ فرم برای مشتری منتظر پیامک و ایمیل نماند
         void Promise.all([
+          sendTelegram(
+            req.payload,
+            settings.telegramChatId,
+            `استعلام جدید ${doc.trackingNumber}`,
+            [
+              ['مسیر', `${origin} ← ${destination}`],
+              ['بار', cargo],
+              ['وزن (تن)', doc.weight],
+              ['نام', doc.name],
+              ['شرکت', doc.company],
+              ['تلفن', doc.phone],
+            ],
+            `${site}/admin/collections/quote-requests/${doc.id}`,
+          ),
+          // ایمیل تأیید برای مشتری (اگر ایمیل داده باشد)
+          sendMail(
+            req.payload,
+            doc.email,
+            `استعلام شما ثبت شد: ${doc.trackingNumber}`,
+            emailTable('استعلام شما ثبت شد', [
+              ['شماره پیگیری', doc.trackingNumber],
+              ['مسیر', `${origin} ← ${destination}`],
+              ['نوع بار', cargo],
+              ['پیگیری آنلاین', trackUrl],
+              ['توضیح', 'کارشناسان ما به‌زودی با شما تماس می‌گیرند.'],
+            ]),
+          ),
           sendSms(
             req.payload,
             settings.notifyPhone,
@@ -86,7 +136,7 @@ export const QuoteRequests: CollectionConfig = {
             ? sendSms(
                 req.payload,
                 doc.phone,
-                `شاهین مارین: درخواست شما با شماره ${doc.trackingNumber} ثبت شد. کارشناسان ما به‌زودی با شما تماس می‌گیرند.`,
+                `شاهین مارین: درخواست شما با شماره ${doc.trackingNumber} ثبت شد. کارشناسان ما به‌زودی با شما تماس می‌گیرند.\nپیگیری: ${trackUrl}`,
               )
             : Promise.resolve(),
           sendMail(

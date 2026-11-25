@@ -12,7 +12,7 @@ export async function PageHeader({ eyebrow, title, intro, crumbs = [] }: Props) 
   const trail: Crumb[] = [{ href: '/', label: t('home') }, ...crumbs]
   return (
     <section className="relative border-b border-border bg-bg text-text">
-      <Container className="relative pb-16 pt-36 lg:pb-24 lg:pt-44">
+      <Container className="relative pb-14 pt-32 lg:pb-20 lg:pt-48">
         <nav aria-label="breadcrumb" className="mb-10 text-xs text-muted">
           <ol className="flex flex-wrap items-center gap-2">
             {trail.map((c, i) => (

@@ -4,9 +4,9 @@ import { PageHeader } from '@/components/sections/PageHeader'
 import { QuoteForm } from '@/components/forms/QuoteForm'
 import { Container } from '@/components/ui/Container'
 import { getSiteSettings, whatsappLink, type Locale } from '@/lib/payload'
-import { SERVICE_OPTIONS } from '@/lib/options'
+import { CARGO_OPTIONS, DESTINATION_OPTIONS, ORIGIN_OPTIONS, SERVICE_OPTIONS, type Option } from '@/lib/options'
 
-type Props = { params: Promise<{ locale: string }>; searchParams: Promise<{ service?: string }> }
+type Props = { params: Promise<{ locale: string }>; searchParams: Promise<{ service?: string; origin?: string; destination?: string; cargo?: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
@@ -18,12 +18,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function QuotePage({ params, searchParams }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const { service } = await searchParams
+  // پیش‌پر کردن فرم از کادر «استعلام» هیرو (فقط مقدارهای مجاز)
+  const sp = await searchParams
+  const ok = (v: string | undefined, opts: Option[]) => (v && opts.some((o) => o.value === v) ? v : '')
   const t = await getTranslations()
   const s = await getSiteSettings(locale as Locale)
   const phone = s.phone || '09366334228'
   const wa = whatsappLink(s.whatsapp || phone)
-  const defaultService = service && SERVICE_OPTIONS.some((o) => o.value === service) ? service : ''
+  const defaults = {
+    service: ok(sp.service, SERVICE_OPTIONS),
+    origin: ok(sp.origin, ORIGIN_OPTIONS),
+    destination: ok(sp.destination, DESTINATION_OPTIONS),
+    cargo: ok(sp.cargo, CARGO_OPTIONS),
+  }
   const after = [t('quote.after1'), t('quote.after2'), t('quote.after3')]
   const num = (n: number) => n.toLocaleString(locale === 'fa' ? 'fa-IR' : 'en-US')
 
@@ -32,7 +39,7 @@ export default async function QuotePage({ params, searchParams }: Props) {
       <PageHeader eyebrow={t('quote.eyebrow')} title={t('quote.title')} intro={t('quote.intro')} crumbs={[{ label: t('nav.quote') }]} />
       <Container className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-12 lg:py-16">
         <div className="lg:col-span-8">
-          <QuoteForm defaultService={defaultService} />
+          <QuoteForm defaults={defaults} />
         </div>
         <aside className="space-y-6 lg:col-span-4">
           <div className="rounded-2xl border border-border p-7">

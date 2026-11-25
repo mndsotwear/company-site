@@ -12,6 +12,8 @@ export async function FloatingQuote() {
       quoteLabel={t('nav.quote')}
       whatsappHref={whatsappLink(s.whatsapp || s.phone)}
       whatsappLabel={t('footer.whatsapp')}
+      phoneHref={s.phone ? `tel:${s.phone.replace(/\s/g, '')}` : null}
+      phoneLabel={t('footer.call')}
     />
   )
 }

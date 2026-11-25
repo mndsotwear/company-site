@@ -25,7 +25,9 @@ const STEP_OF: Record<string, number> = {
 const initial: QuoteState = { ok: false }
 
 // فرم استعلام قیمت در ۳ گام: مسیر و بار ← جزئیات ← اطلاعات تماس
-export function QuoteForm({ defaultService = '' }: { defaultService?: string }) {
+export type QuoteDefaults = { service?: string; origin?: string; destination?: string; cargo?: string }
+
+export function QuoteForm({ defaults = {} }: { defaults?: QuoteDefaults }) {
   const t = useTranslations('quote')
   const locale = useLocale() as 'fa' | 'en'
   const [state, action, pending] = useActionState(submitQuote, initial)
@@ -136,10 +138,10 @@ export function QuoteForm({ defaultService = '' }: { defaultService?: string }) 
 
       <fieldset data-step="0" hidden={step !== 0} className="grid gap-6 sm:grid-cols-2">
         <legend className="sr-only">{steps[0]}</legend>
-        <div className="sm:col-span-2">{select('service', t('service'), SERVICE_OPTIONS, true, defaultService)}</div>
-        {select('origin', t('origin'), ORIGIN_OPTIONS)}
-        {select('destination', t('destination'), DESTINATION_OPTIONS)}
-        <div className="sm:col-span-2">{select('cargo', t('cargo'), CARGO_OPTIONS)}</div>
+        <div className="sm:col-span-2">{select('service', t('service'), SERVICE_OPTIONS, true, defaults.service || '')}</div>
+        {select('origin', t('origin'), ORIGIN_OPTIONS, true, defaults.origin || '')}
+        {select('destination', t('destination'), DESTINATION_OPTIONS, true, defaults.destination || '')}
+        <div className="sm:col-span-2">{select('cargo', t('cargo'), CARGO_OPTIONS, true, defaults.cargo || '')}</div>
       </fieldset>
 
       <fieldset data-step="1" hidden={step !== 1} className="grid gap-6 sm:grid-cols-2">

@@ -18,6 +18,9 @@ import { VesselInquiries } from './collections/VesselInquiries'
 import { QuoteRequests } from './collections/QuoteRequests'
 import { ContactMessages } from './collections/ContactMessages'
 import { Shipments } from './collections/Shipments'
+import { Sailings } from './collections/Sailings'
+import { Offices } from './collections/Offices'
+import { Subscribers } from './collections/Subscribers'
 import { ShipmentImports } from './collections/ShipmentImports'
 import { SiteSettings } from './globals/SiteSettings'
 
@@ -35,7 +38,7 @@ export default buildConfig({
   },
 
   // بخش‌های پنل
-  collections: [Pages, Services, Vessels, VesselInquiries, QuoteRequests, ContactMessages, Shipments, ShipmentImports, Media, Users],
+  collections: [Pages, Services, Vessels, VesselInquiries, QuoteRequests, ContactMessages, Subscribers, Sailings, Offices, Shipments, ShipmentImports, Media, Users],
   globals: [SiteSettings],
 
   // ویرایشگر متن

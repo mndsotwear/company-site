@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 
-type Props = { quoteLabel: string; whatsappHref: string | null; whatsappLabel: string }
+type Props = { quoteLabel: string; whatsappHref: string | null; whatsappLabel: string; phoneHref: string | null; phoneLabel: string }
 
 // دکمه‌های شناور: استعلام قیمت (نارنجی) + واتساپ
 // بعد از رد شدن از بالای صفحه ظاهر می‌شوند تا روی کادر رهگیری هیرو نیفتند
-export function FloatingActions({ quoteLabel, whatsappHref, whatsappLabel }: Props) {
+export function FloatingActions({ quoteLabel, whatsappHref, whatsappLabel, phoneHref, phoneLabel }: Props) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -27,6 +27,18 @@ export function FloatingActions({ quoteLabel, whatsappHref, whatsappLabel }: Pro
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >
+      {phoneHref && (
+        <a
+          href={phoneHref}
+          aria-label={phoneLabel}
+          title={phoneLabel}
+          className="grid h-12 w-12 place-items-center rounded-full bg-primary text-white shadow-lg transition hover:brightness-110 sm:hidden"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+            <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1Z" />
+          </svg>
+        </a>
+      )}
       {whatsappHref && (
         <a
           href={whatsappHref}
